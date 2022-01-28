@@ -21,7 +21,7 @@ Try **Esc** and **F** keys.
 
 Here we have some Python code:
 
-```python
+```python [1|3-4|6-7]
 from itertools import cycle
 
 fizz = cycle(['', '', 'Fizz'])
