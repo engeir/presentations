@@ -1,8 +1,8 @@
-highlightLines: true
+class: center, middle
 
 # A slide with a dark background
 
-Try to press the down arrow key.
+## Author
 
 ---
 
@@ -22,7 +22,7 @@ Here we have some Python code:
 ```python
 from itertools import cycle
 
-* fizz = cycle(['', '', 'Fizz'])
+fizz = cycle(['', '', 'Fizz'])
 buzz = cycle(['', '', '', '', 'Buzz'])
 
 for i in range(1, 101):
