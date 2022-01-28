@@ -31,6 +31,10 @@ for i in range(1, 101):
 
 [Source](https://github.com/olemb/nonsense/blob/master/fizzbuzz/itertools_cycle.py)
 
+<aside class="notes">
+    Shhh, these are your private notes 📝
+</aside>
+
 ---
 
 ## Images (1/2)
