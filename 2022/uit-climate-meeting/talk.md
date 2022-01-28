@@ -1,10 +1,3 @@
-<script src="plugin/markdown/markdown.js"></script>
-<script>
-  Reveal.initialize({
-    plugins: [ RevealMarkdown ]
-  });
-</script>
-
 <!-- .slide: data-background="#000000" -->
 
 ### A slide with a dark background
