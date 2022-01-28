@@ -1,4 +1,6 @@
-### A slide with a dark background
+highlightLines: true
+
+# A slide with a dark background
 
 Try to press the down arrow key.
 
