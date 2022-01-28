@@ -20,7 +20,7 @@ Here we have some Python code:
 ```python
 from itertools import cycle
 
-fizz = cycle(['', '', 'Fizz'])
+* fizz = cycle(['', '', 'Fizz'])
 buzz = cycle(['', '', '', '', 'Buzz'])
 
 for i in range(1, 101):
