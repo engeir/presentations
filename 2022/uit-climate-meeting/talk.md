@@ -10,7 +10,7 @@
 
 - Run CESM2 (community Earth system model) with volcanic forcing
 - Volcanoes are the only external forcing <!-- .element: class="fragment" data-fragment-index="2" -->
-- Poisson process <!-- .element: class="fragment" data-fragment-index="1" -->
+- Poisson process <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Note:
 How do I do this? Two images side-by-side should not be hard!?
