@@ -47,7 +47,7 @@ These are the model runs that are considered
 ---
 
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
-<!-- .slide: data-background-size="3.2vw" -->
+<!-- .slide: data-background-size="30vw" -->
 
 ### Questions
 
