@@ -20,20 +20,12 @@
 
 Here we have some Python code:
 
-<pre><code data-line-numbers="3,8-10">
-<table>
-  <tr>
-    <td>Apples</td>
-    <td>$1</td>
-    <td>7</td>
-  </tr>
-  <tr>
-    <td>Oranges</td>
-    <td>$2</td>
-    <td>18</td>
-  </tr>
-</table>
-</code></pre>
+```js [1-2|3|4]
+let a = 1;
+let b = 2;
+let c = x => 1 + 2 + x;
+c(3);
+```
 
 <aside class="notes">
     Shhh, these are your private notes 📝
