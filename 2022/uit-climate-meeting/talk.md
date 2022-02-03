@@ -87,5 +87,5 @@ These are the model runs that are considered
 # Questions
 
 - Appropriate frequency of volcanoes?
-- Questions
-- For you?
+- Is the response the same as that you get from, say $CO2_$? Solar?
+- Is the response dependent on altitude? Magnitude/total emitted aerosols?
