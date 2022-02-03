@@ -14,15 +14,21 @@
 
 --
 
+Post industrial volcanoes
+
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/synthetic_volcanoes_historic.png" -->
 <!-- .slide: data-background-size="95vw" -->
 
 --
 
+FPP generated volcanoes
+
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/synthetic_volcanoes_FPP.png" -->
 <!-- .slide: data-background-size="95vw" -->
 
 --
+
+Large single volcano
 
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/synthetic_volcanoes_single.png" -->
 <!-- .slide: data-background-size="95vw" -->
