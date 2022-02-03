@@ -1,12 +1,12 @@
-<!-- .global: data-background="#222" -->
+<!-- .slide: data-background="#222" -->
 
-### Running CESM2 with custom volcanic forcing
+## Running CESM2 with custom volcanic forcing
 
 --
 
 <!-- .slide: data-background="#ff8888" -->
 
-### Plan
+## Plan
 
 - Run CESM2 (community Earth system model) with volcanic forcing
 - Volcanoes are the only external forcing <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -19,9 +19,11 @@ How do I do this? Two images side-by-side should not be hard!?
 
 <!-- .slide: data-background="#222" -->
 
-### Status
+## Status
 
 --
+
+<!-- .slide: data-background="#222" -->
 
 Create synthetic volcanic forcing data
 
@@ -48,16 +50,23 @@ Historical run with large eruption in 1850-01-15
 
 <!-- .slide: data-background="#222" -->
 
-### Experiments
+## Experiments
+
+--
+
+<!-- .slide: data-background="#222" -->
 
 These are the model runs that are considered
+
+- Small ensemble over 5 to 10 years -> Look at internal variability
+- Longer run with volcanoes generated from an FPP
 
 ---
 
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
 <!-- .slide: data-background-size="80vw" -->
 
-### Questions
+## Questions
 
 - Do I have
 - Questions
