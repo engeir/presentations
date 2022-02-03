@@ -15,7 +15,7 @@ Try **Esc** and **F** keys.
 
 ---
 
-<!-- .slide: data-background="https://github.com/engeir/presentations/blob/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
+<!-- .slide: data-background="./AEROD_v_simple.png" -->
 
 ### Code blocks are no problem
 
