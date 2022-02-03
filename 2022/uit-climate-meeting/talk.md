@@ -1,35 +1,3 @@
-<script type="text/javascript">
-  window.MathJax = {
-  options: {
-    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process'
-  },
-  tex: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    processEscapes: true,
-    macros: {
-      AA: "{\\unicode{x212B}}"
-    },
-    autoload: {
-      color: [],
-      colorv2: ['color']
-    },
-    packages: {'[+]': ['noerrors']}
-  },
-  chtml: {
-    scale: 0.9
-  },
-  loader: {
-    load: ['[tex]/noerrors']
-  }
-};
-</script>
-
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
-        type="text/javascript" >
-</script>
-
 <!-- .slide: data-background="#222" -->
 
 # Running CESM2 with custom volcanic forcing
