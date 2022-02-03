@@ -22,8 +22,7 @@ How do I do this? Two images side-by-side should not be hard!?
 --
 
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png) |
-| -: | :- |
-Text goes here for both images. Is that okay?
+| |
 
 Note:
 How do I do this? Two images side-by-side should not be hard!?
@@ -31,8 +30,6 @@ How do I do this? Two images side-by-side should not be hard!?
 --
 
 Been Running this and that
-
-| Is | This | A | Table? |
 
 ---
 
