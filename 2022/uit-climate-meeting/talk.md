@@ -8,6 +8,8 @@
 
 ### Plan
 
+- Item 1 <!-- .element: class="fragment" data-fragment-index="2" -->
+- Item 2 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Run CESM2 (community Earth system model) with volcanic forcing
 - Volcanoes are the only external forcing
 - Poisson process
