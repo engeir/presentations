@@ -1,4 +1,4 @@
-<!-- .slide: data-background="#000" -->
+<!-- .slide: data-background="#222" -->
 
 ### Running CESM2 with custom volcanic forcing
 
@@ -17,7 +17,7 @@ How do I do this? Two images side-by-side should not be hard!?
 
 ---
 
-<!-- .slide: data-background="#000" -->
+<!-- .slide: data-background="#222" -->
 
 ### Status
 
@@ -27,7 +27,7 @@ Create synthetic volcanic forcing data
 
 --
 
-<!-- .slide: data-background="#000" -->
+<!-- .slide: data-background="#222" -->
 
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple_vanilla.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple_vanilla.png) |
 | -: | :- |
@@ -38,7 +38,7 @@ How do I do this? Two images side-by-side should not be hard!?
 
 --
 
-<!-- .slide: data-background="#000" -->
+<!-- .slide: data-background="#222" -->
 
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png) |
 | -: | :- |
@@ -46,7 +46,7 @@ Historical run with large eruption in 1850-01-15
 
 ---
 
-<!-- .slide: data-background="#000" -->
+<!-- .slide: data-background="#222" -->
 
 ### Experiments
 
@@ -54,9 +54,8 @@ These are the model runs that are considered
 
 ---
 
-<!-- .slide: data-background="#000" -->
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
-<!-- .slide: data-background-size="50vw" -->
+<!-- .slide: data-background-size="80vw" -->
 
 ### Questions
 
