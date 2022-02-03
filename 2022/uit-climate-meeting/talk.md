@@ -85,8 +85,8 @@ These are the model runs that are considered
 
 # Questions
 
-`$$ J(\theta_0,\theta_1) = \sum_{i=0} $$`
+`$$ math $$`
 
 - Appropriate frequency of volcanoes?
-- Is the response the same as that you get from, say `$$CO_2$$`? Solar?
+- Is the response the same as that you get from, say `$$CO\_2$$`? Solar?
 - Is the response dependent on altitude? Magnitude/total emitted aerosols?
