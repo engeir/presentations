@@ -4,7 +4,7 @@
 
 --
 
-<!-- .slide: data-background="#ff1111" -->
+<!-- .slide: data-background="#990000" -->
 
 ## Plan
 
