@@ -17,6 +17,8 @@ How do I do this? Two images side-by-side should not be hard!?
 
 ---
 
+<!-- .slide: data-background="#000" -->
+
 ### Status
 
 --
@@ -24,6 +26,8 @@ How do I do this? Two images side-by-side should not be hard!?
 Create synthetic volcanic forcing data
 
 --
+
+<!-- .slide: data-background="#000" -->
 
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple_vanilla.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple_vanilla.png) |
 | -: | :- |
@@ -34,11 +38,15 @@ How do I do this? Two images side-by-side should not be hard!?
 
 --
 
+<!-- .slide: data-background="#000" -->
+
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png) |
 | -: | :- |
 Historical run with large eruption in 1850-01-15
 
 ---
+
+<!-- .slide: data-background="#000" -->
 
 ### Experiments
 
