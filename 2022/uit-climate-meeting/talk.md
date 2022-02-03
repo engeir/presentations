@@ -1,4 +1,4 @@
-<!-- .slide: data-background="https://github.com/engeir/presentations/blob/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
+<!-- .slide: data-background="https://github.com/engeir/presentations/blob/main/2022/uit-climate-meeting/AEROD_v_simple.jpg" -->
 
 ### Running CESM2 with custom volcanic forcing
 
