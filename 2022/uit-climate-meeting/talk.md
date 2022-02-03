@@ -15,7 +15,7 @@ Try **Esc** and **F** keys.
 
 ---
 
-<!-- .slide: data-background="./AEROD_v_simple.png" -->
+<section data-background="image.png">
 
 ### Code blocks are no problem
 
