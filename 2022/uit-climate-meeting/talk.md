@@ -8,11 +8,12 @@
 
 ### Plan
 
-- Item 1 <!-- .element: class="fragment" data-fragment-index="2" -->
-- Item 2 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Run CESM2 (community Earth system model) with volcanic forcing
-- Volcanoes are the only external forcing
-- Poisson process
+- Volcanoes are the only external forcing <!-- .element: class="fragment" data-fragment-index="2" -->
+- Poisson process <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Note:
+How do I do this? Two images side-by-side should not be hard!?
 
 ---
 
@@ -20,8 +21,8 @@
 
 --
 
-![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png){ width: 40% }
-![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png){ width: 40% }
+![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png)
+![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png)
 
 Note:
 How do I do this? Two images side-by-side should not be hard!?
