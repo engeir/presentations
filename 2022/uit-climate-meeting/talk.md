@@ -20,7 +20,7 @@
 
 Here we have some Python code:
 
-```{js [1-2|3|4]}
+```{js .data-line-numbers="1|2"}
 let a = 1;
 let b = 2;
 let c = x => 1 + 2 + x;
