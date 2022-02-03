@@ -21,6 +21,10 @@ How do I do this? Two images side-by-side should not be hard!?
 
 --
 
+Create synthetic volcanic forcing data
+
+--
+
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple_vanilla.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple_vanilla.png) |
 | -: | :- |
 Unchanged historical run
@@ -34,16 +38,19 @@ How do I do this? Two images side-by-side should not be hard!?
 | -: | :- |
 Historical run with large eruption in 1850-01-15
 
---
+---
 
-Been Running this and that
+### Experiments
+
+These are the model runs that are considered
 
 ---
 
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
+<!-- .slide: data-background-size="100px" -->
 
-### Images (1/2)
+### Questions
 
-An image fetched from the web:
-
-![Sample image](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/The_Young_Cicero_Reading.jpg/316px-The_Young_Cicero_Reading.jpg)
+- Do I have
+- Questions
+- For you?
