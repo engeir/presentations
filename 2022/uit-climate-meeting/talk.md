@@ -1,4 +1,4 @@
-<!-- .slide: data-background="#222" -->
+<!-- .global: data-background="#222" -->
 
 ### Running CESM2 with custom volcanic forcing
 
