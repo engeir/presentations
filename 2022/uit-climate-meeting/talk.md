@@ -1,10 +1,10 @@
 <!-- .slide: data-background="#222" -->
 
-## Running CESM2 with custom volcanic forcing
+# Running CESM2 with custom volcanic forcing
 
 --
 
-<!-- .slide: data-background="#ff8888" -->
+<!-- .slide: data-background="#ff1111" -->
 
 ## Plan
 
@@ -12,14 +12,26 @@
 - Volcanoes are the only external forcing <!-- .element: class="fragment" data-fragment-index="1" -->
 - Poisson process <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Note:
-How do I do this? Two images side-by-side should not be hard!?
+--
+
+<!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/synthetic_volcanoes_historic.png" -->
+<!-- .slide: data-background-size="95vw" -->
+
+--
+
+<!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/synthetic_volcanoes_FPP.png" -->
+<!-- .slide: data-background-size="95vw" -->
+
+--
+
+<!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/synthetic_volcanoes_single.png" -->
+<!-- .slide: data-background-size="95vw" -->
 
 ---
 
 <!-- .slide: data-background="#222" -->
 
-## Status
+# Status
 
 --
 
@@ -50,7 +62,7 @@ Historical run with large eruption in 1850-01-15
 
 <!-- .slide: data-background="#222" -->
 
-## Experiments
+# Experiments
 
 --
 
@@ -66,7 +78,7 @@ These are the model runs that are considered
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
 <!-- .slide: data-background-size="80vw" -->
 
-## Questions
+# Questions
 
 - Do I have
 - Questions
