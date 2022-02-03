@@ -81,11 +81,10 @@ These are the model runs that are considered
 
 ---
 
-<!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png" -->
-<!-- .slide: data-background-size="80vw" -->
+<!-- .slide: data-background="#222" -->
 
 # Questions
 
 - Appropriate frequency of volcanoes?
-- Is the response the same as that you get from, say $CO2_$? Solar?
+- Is the response the same as that you get from, say \(CO2_\)? Solar?
 - Is the response dependent on altitude? Magnitude/total emitted aerosols?
