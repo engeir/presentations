@@ -23,6 +23,7 @@ How do I do this? Two images side-by-side should not be hard!?
 
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple_vanilla.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple_vanilla.png) |
 | -: | :- |
+Unchanged historical run
 
 Note:
 How do I do this? Two images side-by-side should not be hard!?
@@ -31,6 +32,7 @@ How do I do this? Two images side-by-side should not be hard!?
 
 | ![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png) | ![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png) |
 | -: | :- |
+Historical run with large eruption in 1850-01-15
 
 --
 
