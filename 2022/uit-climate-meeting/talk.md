@@ -1,8 +1,6 @@
 <!-- .slide: data-background="#000000" -->
 
-### A slide with a dark background
-
-Try to press the down arrow key.
+### Running CESM2 with custom volcanic forcing
 
 --
 
@@ -16,6 +14,8 @@ Try **Esc** and **F** keys.
 - Another convincing argument
 
 ---
+
+<!-- .slide: data-background="./AEROD_v_simple.png" -->
 
 ### Code blocks are no problem
 
