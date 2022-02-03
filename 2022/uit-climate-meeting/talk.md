@@ -15,7 +15,7 @@ Try **Esc** and **F** keys.
 
 ---
 
-<section data-background="image.png">
+<section data-background="./AEROD_v_simple.png">
 
 ### Code blocks are no problem
 
