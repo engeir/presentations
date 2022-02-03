@@ -16,20 +16,16 @@
 
 ---
 
-### Code blocks are no problem
+### Status
 
-Here we have some Python code:
+--
 
-```js .data-line-numbers="1|2"
-let a = 1;
-let b = 2;
-let c = x => 1 + 2 + x;
-c(3);
-```
+![Aerosol forcing](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/AEROD_v_simple.png)
+![Temperature](https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/TREFHT_simple.png)
 
-<aside class="notes">
-    Shhh, these are your private notes 📝
-</aside>
+--
+
+Been Running this and that
 
 ---
 
