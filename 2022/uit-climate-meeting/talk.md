@@ -50,7 +50,7 @@
 
 <!-- .slide: data-background="#222" -->
 
-# Status
+# Current affairs
 
 --
 
@@ -62,7 +62,6 @@ Creating synthetic volcanic forcing data
 
 <!-- .slide: data-transition="slide-in fade-out" -->
 <!-- .slide: data-background-transition="slide-in fade-out" -->
-<!-- .slide: style="top:0" -->
 <!-- .slide: data-background="https://github.com/engeir/presentations/raw/main/2022/uit-climate-meeting/assets/synthetic_volcanoes_historic.png" -->
 <!-- .slide: data-background-size="95vw" -->
 <!-- .slide: data-background-color="#000" -->
@@ -219,8 +218,12 @@ if __name__ == "__main__":
 ---
 
 <!-- .slide: data-background="#222" -->
+<!-- .slide: style="color: #ee2" -->
 
 # Math
+
+> Regular text
+<!-- .element: class="fragment" style="font-size: 0.30em !important;" -->
 
 --
 
