@@ -1,17 +1,19 @@
 """Module for creating a poster with `borb`."""
 
+import re
 import os
 from decimal import Decimal
 from pathlib import Path
+from typing import List, Tuple
 
 import borb.pdf as pdf
 from borb.pdf.canvas.geometry.rectangle import Rectangle
-from borb.pdf.canvas.layout.annotation.square_annotation import SquareAnnotation
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
-from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+from borb.pdf.canvas.layout.text.chunk_of_text import ChunkOfText
 from borb.pdf.page.page_size import PageSize
-from borb_poster import color_palette, shapes
+from borb.pdf.canvas.layout.text.chunks_of_text import HeterogeneousParagraph
+from borb_poster import color_palette, custom_plots, shapes
 
 
 def create_qr_code(layout: PageLayout) -> None:
@@ -75,7 +77,8 @@ def _footer(
         pdf.OrderedList()
         .add(
             pdf.Paragraph(
-                "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
+                """Lucy, L. B. (1974), An iterative technique for the rectification of
+                observed distributions."""
             )
         )
         .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
@@ -258,6 +261,24 @@ def _paragraph_text(text: str) -> pdf.Paragraph:
     return pdf.Paragraph(text)
 
 
+def _paragraph_text_chunks(text: List[Tuple[str, str]]) -> HeterogeneousParagraph:
+    font_dict = {
+        "bold": "Helvetica-Bold",
+        "italic": "Helvetica-Oblique",
+        "code": "Courier",
+    }
+    paragraph = HeterogeneousParagraph([])
+    for parts in text:
+        if parts[0] not in font_dict:
+            font = "Helvetica"
+        else:
+            font = font_dict[parts[0]]
+        chunk = parts[1]
+        for w in chunk.split():
+            paragraph.add(ChunkOfText(w + " ", font=font))
+    return paragraph
+
+
 def _paragraph_qr_code(link: str) -> pdf.Barcode:
     """Create a QR code."""
     return pdf.Barcode(
@@ -265,6 +286,8 @@ def _paragraph_qr_code(link: str) -> pdf.Barcode:
         width=Decimal(64),
         height=Decimal(64),
         type=pdf.BarcodeType.QR,
+        horizontal_alignment=Alignment.CENTERED,
+        vertical_alignment=Alignment.MIDDLE,
     )
 
 
@@ -277,11 +300,26 @@ def _paragraph_image(
         pth = path
     # Max 337 width
     width, height = shape
-    if width > 337:
-        width = 337
-        height = int(337 / shape[0] * shape[1])
+    _MAX_WIDTH = 337
+    if width > _MAX_WIDTH:
+        width = _MAX_WIDTH
+        height = int(_MAX_WIDTH / shape[0] * shape[1])
     return pdf.Image(
         pth,
+        width=Decimal(width),
+        height=Decimal(height),
+    )
+
+
+def _paragraph_chart(shape: tuple[int, int]) -> pdf.Image:
+    # Max 337 width
+    width, height = shape
+    _MAX_WIDTH = 337
+    if width > _MAX_WIDTH:
+        width = _MAX_WIDTH
+        height = int(_MAX_WIDTH / shape[0] * shape[1])
+    return pdf.Chart(
+        custom_plots.get_plt(),
         width=Decimal(width),
         height=Decimal(height),
     )
@@ -291,9 +329,18 @@ def create_paragraphs(layout: PageLayout) -> None:
     """Create the paragraphs in the poster."""
     layout.add(_paragraph_heading("Introduction"))
     layout.add(
+        _paragraph_text(
+            """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
+        forcing file loaded by CESM2, but first need to generate raw synthetic forcing
+        data that is used to create the full forcing file. Example: Volcanic eruptions
+        from the last 150 years are included in CESM2 via a file which, if we omit
+        location in space, has volcanoes as shown below."""
+        )
+    )
+    layout.add(
         _paragraph_image(
-            "/home/een023/Documents/presentations-files/2021/chess-am/enger_poster2.png",
-            (6300, 4500),
+            "/home/een023/Documents/work/cesm/model-runs/e_BASELINE/synthetic/data/output/synthetic_volcanoes_20220421_1126.png",
+            (1011, 624),
         )
     )
     layout.add(_paragraph_heading("Creating Volcanoes"))
@@ -301,12 +348,34 @@ def create_paragraphs(layout: PageLayout) -> None:
         layout.get_page(),
         Rectangle(
             layout._previous_element.bounding_box.x
-            + layout._previous_element.bounding_box.width + Decimal(10),
+            + layout._previous_element.bounding_box.width
+            + Decimal(10),
             layout._previous_element.bounding_box.y - Decimal(10),
             Decimal(64),
             Decimal(64),
         ),
     )
+    layout.add(
+        _paragraph_text_chunks(
+            [
+                ("normal", "Strategy is to use the already present forcing file and write over it. This results in "),
+                ("code", "volcano-cooking"),
+                ("normal", "a python library for generating valid CESM2 volcanic forcing files."),
+            ]
+        )
+    )
+    # layout.add(_paragraph_text_chunks("[bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
+    # layout.add(_paragraph_text_chunks("Big [bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
+    layout.add(
+        _paragraph_text_chunks(
+            [
+                ("bold", "volcanoes.nc "),
+                ("normal", "are so very "),
+                ("code", "cool."),
+            ]
+        )
+    )
+    # layout.add(_paragraph_text_chunks("Big [bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
     layout.add(
         _paragraph_image(
             "https://github.com/engeir/presentations/raw/a97344826c48c9210641d7eeae867d3cab1db520/2022/uit-climate-meeting/assets/AEROD_v20220221_simple-ens4.png",
@@ -314,7 +383,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             local=False,
         )
     )
-    for _ in range(110):
+    for _ in range(90):
         layout.add(_paragraph_text("Hello, World!"))
 
 
@@ -336,6 +405,7 @@ def create_poster() -> None:
         number_of_columns=3,
         vertical_margin=header_height + Decimal(50),
         horizontal_margin=Decimal(30),
+        fixed_paragraph_spacing=Decimal(10),
     )
     create_paragraphs(layout)
 
