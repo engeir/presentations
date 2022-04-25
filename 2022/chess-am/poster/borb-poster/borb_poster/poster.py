@@ -3,7 +3,7 @@
 import os
 from decimal import Decimal
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Optional, Tuple, Union
 
 import borb.pdf as pdf
 from borb.pdf.canvas.geometry.rectangle import Rectangle
@@ -266,9 +266,9 @@ def _paragraph_heading(text: str) -> HeterogeneousParagraph:
     return paragraph
 
 
-def _paragraph_text(text: str) -> pdf.Paragraph:
-    return pdf.Paragraph(
-        text,
+def _paragraph_box() -> HeterogeneousParagraph:
+    return HeterogeneousParagraph(
+        [],
         background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
         # border_top=True,
         # border_right=True,
@@ -278,16 +278,30 @@ def _paragraph_text(text: str) -> pdf.Paragraph:
         border_radius_top_right=Decimal(8),
         border_radius_bottom_right=Decimal(8),
         border_radius_bottom_left=Decimal(8),
-        border_color=pdf.HexColor("000000"),
-        # border_width=Decimal(0.1),
-        padding_bottom=Decimal(5),
-        padding_top=Decimal(1),
-        padding_right=Decimal(5),
-        padding_left=Decimal(5),
+        border_color=pdf.HexColor(color_palette.SUPPORTCOLOR["red"]),
+        border_width=Decimal(1),
+        padding_bottom=Decimal(9),
+        padding_top=Decimal(5),
+        padding_right=Decimal(9),
+        padding_left=Decimal(9),
     )
 
 
-def _paragraph_text_chunks(text: List[Tuple[str, str, bool]]) -> HeterogeneousParagraph:
+def _paragraph_text(
+    text: str, paragraph: Optional[HeterogeneousParagraph] = None
+) -> HeterogeneousParagraph:
+    if paragraph is None:
+        paragraph = _paragraph_box()
+
+    for line in text.split():
+        paragraph.add(ChunkOfText(line + " "))
+    return paragraph
+
+
+def _paragraph_text_chunks(
+    text: List[Tuple[str, str, bool]],
+    paragraph: Optional[HeterogeneousParagraph] = None,
+) -> HeterogeneousParagraph:
     font_dict = {
         "bold": "Helvetica-Bold",
         "italic": "Helvetica-Oblique",
@@ -299,24 +313,26 @@ def _paragraph_text_chunks(text: List[Tuple[str, str, bool]]) -> HeterogeneousPa
         # "code": pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
         "code": pdf.HexColor("#555555"),
     }
-    paragraph = HeterogeneousParagraph(
-        [],
-        background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
-        # border_top=True,
-        # border_right=True,
-        # border_bottom=True,
-        # border_left=True,
-        border_radius_top_left=Decimal(8),
-        border_radius_top_right=Decimal(8),
-        border_radius_bottom_right=Decimal(8),
-        border_radius_bottom_left=Decimal(8),
-        border_color=pdf.HexColor("000000"),
-        # border_width=Decimal(0.1),
-        padding_bottom=Decimal(5),
-        padding_top=Decimal(1),
-        padding_right=Decimal(5),
-        padding_left=Decimal(5),
-    )
+    if paragraph is None:
+        paragraph = _paragraph_box()
+        # paragraph = HeterogeneousParagraph(
+        #     [],
+        #     background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+        #     # border_top=True,
+        #     # border_right=True,
+        #     # border_bottom=True,
+        #     # border_left=True,
+        #     border_radius_top_left=Decimal(8),
+        #     border_radius_top_right=Decimal(8),
+        #     border_radius_bottom_right=Decimal(8),
+        #     border_radius_bottom_left=Decimal(8),
+        #     border_color=pdf.HexColor("000000"),
+        #     # border_width=Decimal(0.1),
+        #     padding_bottom=Decimal(5),
+        #     padding_top=Decimal(1),
+        #     padding_right=Decimal(5),
+        #     padding_left=Decimal(5),
+        # )
     for parts in text:
         if parts[0] not in font_dict:
             font = "Helvetica"
@@ -386,10 +402,10 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_text(
             """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
-        forcing file loaded by CESM2, but first need to generate raw synthetic forcing
-        data that is used to create the full forcing file. Example: Volcanic eruptions
-        from the last 150 years are included in CESM2 via a file which, if we omit
-        location in space, has volcanoes as shown below."""
+            forcing file loaded by CESM2, but first need to generate raw synthetic forcing
+            data that is used to create the full forcing file. Example: Volcanic eruptions
+            from the last 150 years are included in CESM2 via a file which, if we omit
+            location in space, has volcanoes as shown below."""
         )
     )
     layout.add(
@@ -413,44 +429,58 @@ def create_paragraphs(layout: PageLayout) -> None:
             Decimal(64),
         ),
     )
-    layout.add(
-        _paragraph_text_chunks(
-            [
-                (
-                    "normal",
-                    "Strategy is to use the already present forcing file and write over it. This resulted in ",
-                    True,
-                ),
-                ("code", " volcano-cooking", False),
-                (
-                    "normal",
-                    ", a python library for generating valid CESM2 volcanic forcing files.",
-                    True,
-                ),
-            ]
-        )
+    volc_box = _paragraph_box()
+    # layout.add(
+    _paragraph_text_chunks(
+        [
+            (
+                "normal",
+                "Strategy is to use the already present forcing file and write over it. This resulted in ",
+                True,
+            ),
+            ("code", " volcano-cooking", False),
+            (
+                "normal",
+                ", a python library for generating valid CESM2 volcanic forcing files.",
+                True,
+            ),
+        ],
+        volc_box,
     )
-    # layout.add(_paragraph_text_chunks("[bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
-    # layout.add(_paragraph_text_chunks("Big [bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
-    layout.add(
-        _paragraph_text_chunks(
-            [
-                ("bold", "volcanoes.nc ", True),
-                ("normal", "are so very ", True),
-                ("code", "cool", False),
-                ("normal", ".", True),
-            ]
-        )
+    _paragraph_text_chunks(
+        [
+            ("bold", "volcanoes.nc ", True),
+            ("normal", "are so very ", True),
+            ("code", "cool", False),
+            ("normal", ".", True),
+        ],
+        volc_box,
     )
-    # layout.add(_paragraph_text_chunks("Big [bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
+    _paragraph_text(
+        """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
+        forcing file loaded by CESM2, but first need to generate raw synthetic forcing
+        data that is used to create the full forcing file. Example: Volcanic eruptions
+        from the last 150 years are included in CESM2 via a file which, if we omit
+        location in space, has volcanoes as shown below.""",
+        volc_box,
+    )
+    layout.add(volc_box)
     layout.add(
         _paragraph_image(
             layout,
-            "https://github.com/engeir/presentations/raw/a97344826c48c9210641d7eeae867d3cab1db520/2022/uit-climate-meeting/assets/AEROD_v20220221_simple-ens4.png",
-            shape=(1011, 624),
-            local=False,
+            "/home/een023/Documents/presentations-files/2022/chess-am/assets/paired-percentiles.png",
+            shape=(2022, 624),
+            local=True,
         )
     )
+    # layout.add(
+    #     _paragraph_image(
+    #         layout,
+    #         "https://github.com/engeir/presentations-files/raw/ce8078c1f469e75ed910118e2cd3a222077b3983/2022/chess-am/assets/TREFHT-strong_percentiles.png",
+    #         shape=(int(1011 / 5), int(624 / 5)),
+    #         local=False,
+    #     )
+    # )
 
     # FUTURE ------------------------------------------------------------------------- #
     layout.add(_paragraph_heading("Future work and use cases"))
@@ -485,8 +515,6 @@ def create_paragraphs(layout: PageLayout) -> None:
             Decimal(64),
         ),
     )
-    for _ in range(20):
-        layout.add(_paragraph_text("Hello, World!"))
 
 
 def custom_layout(
