@@ -1,6 +1,5 @@
 """Module for creating a poster with `borb`."""
 
-import re
 import os
 from decimal import Decimal
 from pathlib import Path
@@ -11,9 +10,10 @@ from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.chunk_of_text import ChunkOfText
-from borb.pdf.page.page_size import PageSize
 from borb.pdf.canvas.layout.text.chunks_of_text import HeterogeneousParagraph
+from borb.pdf.page.page_size import PageSize
 from borb_poster import color_palette, custom_plots, shapes
+from borb.pdf.canvas.layout.emoji.emoji import Emoji, Emojis
 
 
 def create_qr_code(layout: PageLayout) -> None:
@@ -244,38 +244,92 @@ def create_header_footer(page: pdf.Page, header_height: Decimal) -> None:
     _footer(page, r_bot, header_height, margin_y, width)
 
 
-def _paragraph_heading(text: str) -> pdf.Heading:
-    return pdf.Heading(
-        text,
-        font="Helvetica-Bold-Oblique",
-        font_size=Decimal(30),
-        # background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
-        border_color=pdf.HexColor(color_palette.SUPPORTCOLOR["red"]),
-        border_width=Decimal(1),
-        border_bottom=True,
-        # border_radius_bottom_left=Decimal(10),
+def _paragraph_heading(text: str) -> HeterogeneousParagraph:
+    paragraph = HeterogeneousParagraph([])
+    volc: Emoji = Emojis.VOLCANO.value
+    volc.set_font_size(Decimal(30))
+    paragraph.add(volc)
+    paragraph.add(ChunkOfText("    "))
+    paragraph.add(
+        ChunkOfText(
+            text,
+            font="Helvetica-Bold-Oblique",
+            font_size=Decimal(30),
+            # background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+            border_color=pdf.HexColor(color_palette.SUPPORTCOLOR["red"]),
+            border_width=Decimal(1),
+            border_bottom=True,
+            padding_bottom=Decimal(3),
+            # border_radius_bottom_left=Decimal(10),
+        )
     )
+    return paragraph
 
 
 def _paragraph_text(text: str) -> pdf.Paragraph:
-    return pdf.Paragraph(text)
+    return pdf.Paragraph(
+        text,
+        background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+        # border_top=True,
+        # border_right=True,
+        # border_bottom=True,
+        # border_left=True,
+        border_radius_top_left=Decimal(8),
+        border_radius_top_right=Decimal(8),
+        border_radius_bottom_right=Decimal(8),
+        border_radius_bottom_left=Decimal(8),
+        border_color=pdf.HexColor("000000"),
+        # border_width=Decimal(0.1),
+        padding_bottom=Decimal(5),
+        padding_top=Decimal(1),
+        padding_right=Decimal(5),
+        padding_left=Decimal(5),
+    )
 
 
-def _paragraph_text_chunks(text: List[Tuple[str, str]]) -> HeterogeneousParagraph:
+def _paragraph_text_chunks(text: List[Tuple[str, str, bool]]) -> HeterogeneousParagraph:
     font_dict = {
         "bold": "Helvetica-Bold",
         "italic": "Helvetica-Oblique",
         "code": "Courier",
     }
-    paragraph = HeterogeneousParagraph([])
+    back_color_dict = {
+        "bold": pdf.HexColor("#000000"),
+        "italic": pdf.HexColor("#000000"),
+        # "code": pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+        "code": pdf.HexColor("#555555"),
+    }
+    paragraph = HeterogeneousParagraph(
+        [],
+        background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+        # border_top=True,
+        # border_right=True,
+        # border_bottom=True,
+        # border_left=True,
+        border_radius_top_left=Decimal(8),
+        border_radius_top_right=Decimal(8),
+        border_radius_bottom_right=Decimal(8),
+        border_radius_bottom_left=Decimal(8),
+        border_color=pdf.HexColor("000000"),
+        # border_width=Decimal(0.1),
+        padding_bottom=Decimal(5),
+        padding_top=Decimal(1),
+        padding_right=Decimal(5),
+        padding_left=Decimal(5),
+    )
     for parts in text:
         if parts[0] not in font_dict:
             font = "Helvetica"
+            back_color = pdf.HexColor("000000")
         else:
             font = font_dict[parts[0]]
+            back_color = back_color_dict[parts[0]]
         chunk = parts[1]
-        for w in chunk.split():
-            paragraph.add(ChunkOfText(w + " ", font=font))
+        for i, w in enumerate(chunk.split()):
+            if not parts[2] and i == len(chunk.split()) - 1:
+                paragraph.add(ChunkOfText(w, font=font, font_color=back_color))
+            else:
+                paragraph.add(ChunkOfText(w + " ", font=font, font_color=back_color))
     return paragraph
 
 
@@ -292,32 +346,32 @@ def _paragraph_qr_code(link: str) -> pdf.Barcode:
 
 
 def _paragraph_image(
-    path: str, shape: tuple[int, int], local: bool = True
+    layout: PageLayout, path: str, shape: tuple[int, int], local: bool = True
 ) -> pdf.Image:
     if local:
         pth = Path(path)
     else:
         pth = path
-    # Max 337 width
     width, height = shape
-    _MAX_WIDTH = 337
-    if width > _MAX_WIDTH:
-        width = _MAX_WIDTH
-        height = int(_MAX_WIDTH / shape[0] * shape[1])
+    cw = layout._column_width
+    if width > cw:
+        width = cw
+        height = int(cw / shape[0] * shape[1])
     return pdf.Image(
         pth,
         width=Decimal(width),
         height=Decimal(height),
+        # margin_bottom=Decimal(-10),
     )
 
 
-def _paragraph_chart(shape: tuple[int, int]) -> pdf.Image:
+def _paragraph_chart(layout: PageLayout, shape: tuple[int, int]) -> pdf.Image:
     # Max 337 width
     width, height = shape
-    _MAX_WIDTH = 337
-    if width > _MAX_WIDTH:
-        width = _MAX_WIDTH
-        height = int(_MAX_WIDTH / shape[0] * shape[1])
+    cw = layout._column_width
+    if width > cw:
+        width = cw
+        height = int(cw / shape[0] * shape[1])
     return pdf.Chart(
         custom_plots.get_plt(),
         width=Decimal(width),
@@ -327,6 +381,7 @@ def _paragraph_chart(shape: tuple[int, int]) -> pdf.Image:
 
 def create_paragraphs(layout: PageLayout) -> None:
     """Create the paragraphs in the poster."""
+    # INTRODUCTION ------------------------------------------------------------------- #
     layout.add(_paragraph_heading("Introduction"))
     layout.add(
         _paragraph_text(
@@ -339,10 +394,13 @@ def create_paragraphs(layout: PageLayout) -> None:
     )
     layout.add(
         _paragraph_image(
+            layout,
             "/home/een023/Documents/work/cesm/model-runs/e_BASELINE/synthetic/data/output/synthetic_volcanoes_20220421_1126.png",
             (1011, 624),
         )
     )
+
+    # CREATING VOLCANOES ------------------------------------------------------------- #
     layout.add(_paragraph_heading("Creating Volcanoes"))
     _paragraph_qr_code("https://github.com/engeir/volcano-cooking").layout(
         layout.get_page(),
@@ -350,7 +408,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             layout._previous_element.bounding_box.x
             + layout._previous_element.bounding_box.width
             + Decimal(10),
-            layout._previous_element.bounding_box.y - Decimal(10),
+            layout._previous_element.bounding_box.y - Decimal(7.5),
             Decimal(64),
             Decimal(64),
         ),
@@ -358,9 +416,17 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_text_chunks(
             [
-                ("normal", "Strategy is to use the already present forcing file and write over it. This results in "),
-                ("code", "volcano-cooking"),
-                ("normal", "a python library for generating valid CESM2 volcanic forcing files."),
+                (
+                    "normal",
+                    "Strategy is to use the already present forcing file and write over it. This resulted in ",
+                    True,
+                ),
+                ("code", " volcano-cooking", False),
+                (
+                    "normal",
+                    ", a python library for generating valid CESM2 volcanic forcing files.",
+                    True,
+                ),
             ]
         )
     )
@@ -369,22 +435,82 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_text_chunks(
             [
-                ("bold", "volcanoes.nc "),
-                ("normal", "are so very "),
-                ("code", "cool."),
+                ("bold", "volcanoes.nc ", True),
+                ("normal", "are so very ", True),
+                ("code", "cool", False),
+                ("normal", ".", True),
             ]
         )
     )
     # layout.add(_paragraph_text_chunks("Big [bold]volcanoes.nc[/bold] are [code]cool[/cool]."))
     layout.add(
         _paragraph_image(
+            layout,
             "https://github.com/engeir/presentations/raw/a97344826c48c9210641d7eeae867d3cab1db520/2022/uit-climate-meeting/assets/AEROD_v20220221_simple-ens4.png",
             shape=(1011, 624),
             local=False,
         )
     )
-    for _ in range(90):
+
+    # FUTURE ------------------------------------------------------------------------- #
+    layout.add(_paragraph_heading("Future work and use cases"))
+    layout.add(
+        _paragraph_text(
+            """We can use this to look at how forcing at specific locations affect the
+        global climate, as well as how a given region and neighbouring regions is
+        affected. One particularly interesting region may be the arctic; we could then
+        place a big eruption in Greenland and observe how the climate changes from
+        there.
+        """
+        )
+    )
+    layout.add(
+        _paragraph_image(
+            layout,
+            "https://github.com/engeir/presentations-files/raw/f71580dcb981c2e827b7f9bde3978390fe60840f/2022/chess-am/assets/AEROD_v20220404-composite.png",
+            shape=(1191, 754),
+            local=False,
+        )
+    )
+    _paragraph_qr_code(
+        "https://github.com/engeir/presentations-files/raw/14d24ee6343b4b80be8476eb9e2b76bbfadd8dc5/2022/chess-am/assets/AEROD_v20220404.mp4"
+    ).layout(
+        layout.get_page(),
+        Rectangle(
+            layout._previous_element.bounding_box.x
+            # + layout._previous_element.bounding_box.width
+            + Decimal(10),
+            layout._previous_element.bounding_box.y + Decimal(65),
+            Decimal(64),
+            Decimal(64),
+        ),
+    )
+    for _ in range(20):
         layout.add(_paragraph_text("Hello, World!"))
+
+
+def custom_layout(
+    page: pdf.Page, header_height: Decimal, number_of_columns: int
+) -> PageLayout:
+    """Create a MultiColumnLayout with adjusted init method."""
+    # Create the main layout
+    layout = pdf.MultiColumnLayout(
+        page,
+        number_of_columns=number_of_columns,
+        vertical_margin=header_height + Decimal(50),
+        horizontal_margin=Decimal(30),
+        fixed_paragraph_spacing=Decimal(15),
+    )
+    # Re-setting the column widths that are defined in the `__init__` method.
+    # inter-column margin
+    layout._inter_column_margin = Decimal(15)  # layout._page_width * Decimal(0.02)
+    layout._number_of_columns = Decimal(number_of_columns)
+    layout._column_width = (
+        layout._page_width
+        - Decimal(2) * layout._horizontal_margin
+        - Decimal(number_of_columns - 1) * layout._inter_column_margin
+    ) / Decimal(number_of_columns)
+    return layout
 
 
 def create_poster() -> None:
@@ -400,13 +526,7 @@ def create_poster() -> None:
     doc.append_page(page)
     create_header_footer(page, header_height)
 
-    layout = pdf.MultiColumnLayout(
-        page,
-        number_of_columns=3,
-        vertical_margin=header_height + Decimal(50),
-        horizontal_margin=Decimal(30),
-        fixed_paragraph_spacing=Decimal(10),
-    )
+    layout = custom_layout(page, header_height, 2)
     create_paragraphs(layout)
 
     with open("poster.pdf", "wb") as pdf_file_handle:
