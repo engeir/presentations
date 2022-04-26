@@ -61,7 +61,7 @@ def _footer(
     pdf.FixedColumnWidthTable(
         number_of_rows=1,
         number_of_columns=4,
-        column_widths=[Decimal(0.15), Decimal(0.28), Decimal(0.29), Decimal(0.28)],
+        column_widths=[Decimal(0.15), Decimal(0.32), Decimal(0.32), Decimal(0.21)],
     ).add(
         # pdf.TableCell(
         pdf.Paragraph(
@@ -123,31 +123,31 @@ def _footer(
         )
         .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
     ).add(
-        pdf.OrderedList(start_index=13)
-        .add(
-            pdf.Paragraph(
-                "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
-            )
+        pdf.Paragraph(
+            "View digital version!",
+            font="Helvetica-Oblique",
+            font_size=Decimal(20),
+            font_color=pdf.HexColor(color_palette.SUPPORTCOLOR["yellow"]),
+            horizontal_alignment=Alignment.RIGHT,
         )
-        .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
-        .add(
-            pdf.Paragraph(
-                "Maecenas vitae dui ac nisi aliquam malesuada in consequat sapien."
-            )
-        )
-        .add(
-            pdf.Paragraph(
-                "Nam aliquet ex eget felis lobortis aliquet sit amet ut risus."
-            )
-        )
-        .add(
-            pdf.Paragraph(
-                "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
-            )
-        )
-        .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
     ).no_borders().layout(
         page, bounding_box
+    )
+    pdf.Barcode(
+        data="https://github.com/engeir/presentations-files/raw/249364d90e7a42ccc690448bf408cc85d60708f4/2021/fysikermotet/beamer_fysikermotet.pdf",
+        width=Decimal(128),
+        height=Decimal(128),
+        type=pdf.BarcodeType.QR,
+        horizontal_alignment=Alignment.RIGHT,
+        vertical_alignment=Alignment.BOTTOM,
+    ).layout(
+        page,
+        Rectangle(
+            bounding_box.x + bounding_box.width - Decimal(128),
+            bounding_box.y - Decimal(10),
+            Decimal(128),
+            Decimal(128),
+        ),
     )
 
     shapes.footer_shapes(page, header_height, margin_y, width)
@@ -267,7 +267,7 @@ def _paragraph_heading(text: str) -> HeterogeneousParagraph:
 
 
 def _paragraph_box() -> HeterogeneousParagraph:
-    return HeterogeneousParagraph(
+    h = HeterogeneousParagraph(
         [],
         background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
         # border_top=True,
@@ -284,7 +284,10 @@ def _paragraph_box() -> HeterogeneousParagraph:
         padding_top=Decimal(5),
         padding_right=Decimal(9),
         padding_left=Decimal(9),
+        fixed_leading=Decimal(10),
     )
+    h._respect_newlines_in_text = True
+    return h
 
 
 def _paragraph_text(
@@ -294,7 +297,7 @@ def _paragraph_text(
         paragraph = _paragraph_box()
 
     for line in text.split():
-        paragraph.add(ChunkOfText(line + " "))
+        paragraph.add(ChunkOfText(line + " ", font_size=Decimal(15)))
     return paragraph
 
 
@@ -315,24 +318,6 @@ def _paragraph_text_chunks(
     }
     if paragraph is None:
         paragraph = _paragraph_box()
-        # paragraph = HeterogeneousParagraph(
-        #     [],
-        #     background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
-        #     # border_top=True,
-        #     # border_right=True,
-        #     # border_bottom=True,
-        #     # border_left=True,
-        #     border_radius_top_left=Decimal(8),
-        #     border_radius_top_right=Decimal(8),
-        #     border_radius_bottom_right=Decimal(8),
-        #     border_radius_bottom_left=Decimal(8),
-        #     border_color=pdf.HexColor("000000"),
-        #     # border_width=Decimal(0.1),
-        #     padding_bottom=Decimal(5),
-        #     padding_top=Decimal(1),
-        #     padding_right=Decimal(5),
-        #     padding_left=Decimal(5),
-        # )
     for parts in text:
         if parts[0] not in font_dict:
             font = "Helvetica"
@@ -343,9 +328,17 @@ def _paragraph_text_chunks(
         chunk = parts[1]
         for i, w in enumerate(chunk.split()):
             if not parts[2] and i == len(chunk.split()) - 1:
-                paragraph.add(ChunkOfText(w, font=font, font_color=back_color))
+                paragraph.add(
+                    ChunkOfText(
+                        w, font=font, font_color=back_color, font_size=Decimal(15)
+                    )
+                )
             else:
-                paragraph.add(ChunkOfText(w + " ", font=font, font_color=back_color))
+                paragraph.add(
+                    ChunkOfText(
+                        w + " ", font=font, font_color=back_color, font_size=Decimal(15)
+                    )
+                )
     return paragraph
 
 
@@ -377,6 +370,7 @@ def _paragraph_image(
         pth,
         width=Decimal(width),
         height=Decimal(height),
+        horizontal_alignment=Alignment.CENTERED,
         # margin_bottom=Decimal(-10),
     )
 
@@ -468,16 +462,26 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_image(
             layout,
-            "/home/een023/Documents/presentations-files/2022/chess-am/assets/paired-percentiles.png",
-            shape=(2022, 624),
+            "/home/een023/Documents/presentations-files/2022/chess-am/assets/percentiles-overlaid.png",
+            shape=(1201, 744),
+            # shape=(2022, 624),
             local=True,
         )
     )
+    # scale_down = 3
+    # layout.add(
+    #     _paragraph_image(
+    #         layout,
+    #         "https://github.com/engeir/presentations-files/raw/ce8078c1f469e75ed910118e2cd3a222077b3983/2022/chess-am/assets/AEROD_v-strong_percentiles.png",
+    #         shape=(int(1011 / scale_down), int(624 / scale_down)),
+    #         local=False,
+    #     )
+    # )
     # layout.add(
     #     _paragraph_image(
     #         layout,
     #         "https://github.com/engeir/presentations-files/raw/ce8078c1f469e75ed910118e2cd3a222077b3983/2022/chess-am/assets/TREFHT-strong_percentiles.png",
-    #         shape=(int(1011 / 5), int(624 / 5)),
+    #         shape=(int(1011 / scale_down), int(624 / scale_down)),
     #         local=False,
     #     )
     # )
@@ -487,6 +491,12 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_text(
             """We can use this to look at how forcing at specific locations affect the
+        global climate, as well as how a given region and neighbouring regions is
+        affected. One particularly interesting region may be the arctic; we could then
+        place a big eruption in Greenland and observe how the climate changes from
+        there.\n
+
+        We can use this to look at how forcing at specific locations affect the
         global climate, as well as how a given region and neighbouring regions is
         affected. One particularly interesting region may be the arctic; we could then
         place a big eruption in Greenland and observe how the climate changes from
