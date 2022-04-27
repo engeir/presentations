@@ -77,11 +77,17 @@ def _footer(
         pdf.OrderedList()
         .add(
             pdf.Paragraph(
-                """Lucy, L. B. (1974), An iterative technique for the rectification of
-                observed distributions."""
+                """Bender, F. AM., Ekman, A. M. L., et al. (2010), Response to the
+                eruption of Mount Pinatubo in relation to climate sensitivity in the
+                CMIP3 models."""
             )
         )
-        .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
+        .add(
+            pdf.Paragraph(
+                """Boer, G. J., Stowasser, M., et al. (2007), Inferring
+                climate sensitivity from volcanic events."""
+            )
+        )
         .add(
             pdf.Paragraph(
                 "Maecenas vitae dui ac nisi aliquam malesuada in consequat sapien."
@@ -266,7 +272,7 @@ def _paragraph_heading(text: str) -> HeterogeneousParagraph:
     return paragraph
 
 
-def _paragraph_box() -> HeterogeneousParagraph:
+def _paragraph_box(padding_bottom: Decimal = Decimal(9)) -> HeterogeneousParagraph:
     h = HeterogeneousParagraph(
         [],
         background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
@@ -280,7 +286,7 @@ def _paragraph_box() -> HeterogeneousParagraph:
         border_radius_bottom_left=Decimal(8),
         border_color=pdf.HexColor(color_palette.SUPPORTCOLOR["red"]),
         border_width=Decimal(1),
-        padding_bottom=Decimal(9),
+        padding_bottom=padding_bottom,
         padding_top=Decimal(5),
         padding_right=Decimal(9),
         padding_left=Decimal(9),
@@ -355,7 +361,12 @@ def _paragraph_qr_code(link: str) -> pdf.Barcode:
 
 
 def _paragraph_image(
-    layout: PageLayout, path: str, shape: tuple[int, int], local: bool = True
+    layout: PageLayout,
+    path: str,
+    shape: tuple[int, int],
+    local: bool = True,
+    padding_bottom: Decimal = Decimal(0),
+    caption: Optional[Union[float, str]] = None,
 ) -> pdf.Image:
     if local:
         pth = Path(path)
@@ -363,14 +374,32 @@ def _paragraph_image(
         pth = path
     width, height = shape
     cw = layout._column_width
+    align = Alignment.CENTERED
     if width > cw:
         width = cw
-        height = int(cw / shape[0] * shape[1])
+    match caption:
+        case "left":
+            width = cw * Decimal(0.8)
+            align = Alignment.RIGHT
+        case "bottom":
+            # Try to make a sort of good fit, but can be adjusted with
+            # padding_bottom anyway
+            padding_bottom += Decimal(20)
+        case float():
+            if caption == 0 or abs(caption) > 1:
+                raise AttributeError("Caption must be between -1 and 1, and non-zero.")
+            elif caption < 0:
+                align = Alignment.LEFT
+            else:
+                align = Alignment.RIGHT
+            width = cw * Decimal(abs(1 - caption))
+    height = int(width / shape[0] * shape[1])
     return pdf.Image(
         pth,
         width=Decimal(width),
         height=Decimal(height),
-        horizontal_alignment=Alignment.CENTERED,
+        horizontal_alignment=align,
+        padding_bottom=padding_bottom,
         # margin_bottom=Decimal(-10),
     )
 
@@ -395,19 +424,57 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(_paragraph_heading("Introduction"))
     layout.add(
         _paragraph_text(
-            """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
-            forcing file loaded by CESM2, but first need to generate raw synthetic forcing
-            data that is used to create the full forcing file. Example: Volcanic eruptions
-            from the last 150 years are included in CESM2 via a file which, if we omit
-            location in space, has volcanoes as shown below."""
+            """In order to estimate the global temperature response and climate
+            sensitivity to radiative forcing, volcanic activity is an important testbed.
+            This is done using a non-parametric approach, contrary to most previous
+            attempts (e.g. [1, 2]). In order to have good datasets with high resolution
+            and eruptions of correct physical properties and frequency, simulations with
+            custom made synthetic volcanic data is run using the Community Earth System
+            model, version 2 (CESM2)."""
         )
     )
+    layout.add(
+        _paragraph_text(
+            """We are running CESM2.1.3 with the WACCM6 atmosphere model with middle
+            atmosphere chemistry, which means that it calculates the evolution of
+            stratospheric aerosols from SO2 emissions. The raw emissions file for the
+            default historical run (1850 to 2016) is show below, where each eruption
+            last for six hours per day, starting at noon."""
+        )
+    )
+    # layout.add(
+    #     _paragraph_text(
+    #         """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
+    #         forcing file loaded by CESM2, but first need to generate raw synthetic forcing
+    #         data that is used to create the full forcing file. Example: Volcanic eruptions
+    #         from the last 150 years are included in CESM2 via a file which, if we omit
+    #         location in space, has volcanoes as shown below."""
+    #     )
+    # )
     layout.add(
         _paragraph_image(
             layout,
             "/home/een023/Documents/work/cesm/model-runs/e_BASELINE/synthetic/data/output/synthetic_volcanoes_20220421_1126.png",
             (1011, 624),
+            caption=0.2,
         )
+    )
+    pdf.Paragraph(
+        """Emissions file used in CESM2 to simulate volcanic eruptions between 1850 and
+        2016. Each bar represent the total emission for a given day, with emissions
+        lasting six hours per day.""",
+        horizontal_alignment=Alignment.CENTERED,
+        font="Helvetica-Oblique",
+        font_color=pdf.HexColor("#555555"),
+        font_size=Decimal(10),
+    ).layout(
+        layout.get_page(),
+        Rectangle(
+            layout._horizontal_margin + Decimal(10),
+            layout._previous_element.bounding_box.y + Decimal(10),
+            layout._column_width * Decimal(0.23),
+            layout._previous_element.bounding_box.height - Decimal(20),
+        ),
     )
 
     # CREATING VOLCANOES ------------------------------------------------------------- #
@@ -466,6 +533,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             shape=(1201, 744),
             # shape=(2022, 624),
             local=True,
+            padding_bottom=Decimal(20),
         )
     )
     # scale_down = 3
