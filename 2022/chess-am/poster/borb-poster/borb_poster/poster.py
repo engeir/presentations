@@ -408,6 +408,43 @@ def _paragraph_image(
     )
 
 
+def _caption_previous_object(
+    text: str, layout: PageLayout, location: str = "left"
+) -> None:
+    match location:
+        case "left" | "right":
+            x = (
+                layout._horizontal_margin
+                + layout._current_column_index
+                * (layout._column_width + layout._inter_column_margin)
+                + Decimal(10)
+            )
+            y = layout._previous_element.bounding_box.y + Decimal(10)
+            width = layout._column_width * Decimal(0.23)
+            height = layout._previous_element.bounding_box.height - Decimal(20)
+        case "bottom":
+            x = layout._horizontal_margin + layout._current_column_index * (
+                layout._column_width + layout._inter_column_margin
+            )
+            y = layout._previous_element.bounding_box.y + Decimal(10)
+            width = layout._column_width
+            height = Decimal(20)
+        case _:
+            raise ValueError(
+                f"location must be one of 'left', 'right', 'bottom', not {location}"
+            )
+    pdf.Paragraph(
+        text,
+        horizontal_alignment=Alignment.CENTERED,
+        font="Helvetica-Oblique",
+        font_color=pdf.HexColor("#555555"),
+        font_size=Decimal(10),
+    ).layout(
+        layout.get_page(),
+        Rectangle(x, y, width, height),
+    )
+
+
 def _paragraph_chart(layout: PageLayout, shape: tuple[int, int]) -> pdf.Image:
     # Max 337 width
     width, height = shape
