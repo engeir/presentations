@@ -369,6 +369,10 @@ def _paragraph_image(
     caption: Optional[Union[float, str]] = None,
 ) -> pdf.Image:
     if local:
+        print(
+            "WARNING: using local image file. Might cause problems when reproducing. "
+            + "Consider uploading to GitHub or similar and use a permalink."
+        )
         pth = Path(path)
     else:
         pth = path
