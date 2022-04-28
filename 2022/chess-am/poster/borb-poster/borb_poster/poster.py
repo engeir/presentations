@@ -172,7 +172,7 @@ def _header(
     img_w = Decimal(2724 * scale_img)
     img_h = Decimal(500 * scale_img)
     pdf.Heading(
-        "A long and completely meaningless title, but it is nice for testing!",
+        "Climate sensitivity estimates from volcanoes in the CESM2",
         font="Helvetica-Bold",
         font_color=pdf.HexColor(color_palette.MAIN_COLOR),
         font_size=Decimal(35),
@@ -420,7 +420,7 @@ def _caption_previous_object(
                 + Decimal(10)
             )
             y = layout._previous_element.bounding_box.y + Decimal(10)
-            width = layout._column_width * Decimal(0.23)
+            width = layout._column_width * Decimal(0.2)
             height = layout._previous_element.bounding_box.height - Decimal(20)
         case "bottom":
             x = layout._horizontal_margin + layout._current_column_index * (
@@ -483,15 +483,6 @@ def create_paragraphs(layout: PageLayout) -> None:
             last for six hours per day, starting at noon."""
         )
     )
-    # layout.add(
-    #     _paragraph_text(
-    #         """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
-    #         forcing file loaded by CESM2, but first need to generate raw synthetic forcing
-    #         data that is used to create the full forcing file. Example: Volcanic eruptions
-    #         from the last 150 years are included in CESM2 via a file which, if we omit
-    #         location in space, has volcanoes as shown below."""
-    #     )
-    # )
     layout.add(
         _paragraph_image(
             layout,
@@ -500,22 +491,12 @@ def create_paragraphs(layout: PageLayout) -> None:
             caption=0.2,
         )
     )
-    pdf.Paragraph(
+    _caption_previous_object(
         """Emissions file used in CESM2 to simulate volcanic eruptions between 1850 and
         2016. Each bar represent the total emission for a given day, with emissions
         lasting six hours per day.""",
-        horizontal_alignment=Alignment.CENTERED,
-        font="Helvetica-Oblique",
-        font_color=pdf.HexColor("#555555"),
-        font_size=Decimal(10),
-    ).layout(
-        layout.get_page(),
-        Rectangle(
-            layout._horizontal_margin + Decimal(10),
-            layout._previous_element.bounding_box.y + Decimal(10),
-            layout._column_width * Decimal(0.23),
-            layout._previous_element.bounding_box.height - Decimal(20),
-        ),
+        layout,
+        location="left",
     )
 
     # CREATING VOLCANOES ------------------------------------------------------------- #
@@ -532,7 +513,6 @@ def create_paragraphs(layout: PageLayout) -> None:
         ),
     )
     volc_box = _paragraph_box()
-    # layout.add(
     _paragraph_text_chunks(
         [
             (
@@ -574,8 +554,17 @@ def create_paragraphs(layout: PageLayout) -> None:
             shape=(1201, 744),
             # shape=(2022, 624),
             local=True,
-            padding_bottom=Decimal(20),
+            caption="bottom",
         )
+    )
+    _caption_previous_object(
+        """Aerosol optical depth and temperature response obtained from four different
+        simulations using identical volcanic eruptions, shifted in time by three month,
+        placing one eruption in each season of the year. The black lines show the
+        median, while the red shading lie between the 2.5th and 97.5th percentiles.
+        """,
+        layout,
+        location="bottom",
     )
     # scale_down = 3
     # layout.add(
@@ -595,6 +584,34 @@ def create_paragraphs(layout: PageLayout) -> None:
     #     )
     # )
 
+    # RESULTS ------------------------------------------------------------------------ #
+    layout.add(_paragraph_heading("Results"))
+    layout.add(
+        _paragraph_text(
+            """Here we can mention (1) shape comparison between medium and
+            strong (2) peak comes quite late, 1 to 2 years after the eruption.
+            """
+        )
+    )
+    layout.add(
+        _paragraph_image(
+            layout,
+            "/home/een023/Documents/presentations-files/2022/chess-am/assets/compare-waveform-integrate.png",
+            shape=(1011, 624),
+            local=True,
+            caption=0.2,
+        )
+    )
+    _caption_previous_object(
+        """Comparison between the waveform of the temperature response from the
+        smaller and the larger volcanic eruption. The black lines are medians
+        from ensembles of four, while the shading cover from the 5th to the
+        95th percentile. Both lines are coloured black for better visibility,
+        with the more noisy signal corresponding to the red, wider shading.
+        """,
+        layout,
+        location="left",
+    )
     # FUTURE ------------------------------------------------------------------------- #
     layout.add(_paragraph_heading("Future work and use cases"))
     layout.add(
