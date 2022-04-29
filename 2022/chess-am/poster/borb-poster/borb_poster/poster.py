@@ -16,6 +16,12 @@ from borb.pdf.page.page_size import PageSize
 from borb_poster import color_palette, custom_plots, shapes
 from borb.pdf.canvas.layout.emoji.emoji import Emoji, Emojis
 
+try:
+    from rich import traceback
+    traceback.install()
+except ImportError:
+    pass
+
 
 def create_qr_code(layout: PageLayout) -> None:
     """Create a QR code."""
@@ -59,10 +65,11 @@ def _footer(
     margin_y: Decimal,
     width: Decimal,
 ) -> None:
+    c1, c2, c3, c4 = 0.15, 0.52, 0.12, 0.21
     pdf.FixedColumnWidthTable(
         number_of_rows=1,
         number_of_columns=4,
-        column_widths=[Decimal(0.12), Decimal(0.34), Decimal(0.33), Decimal(0.21)],
+        column_widths=[Decimal(c1), Decimal(c2), Decimal(c3), Decimal(c4)],
     ).add(
         # pdf.TableCell(
         pdf.Paragraph(
@@ -75,7 +82,7 @@ def _footer(
             padding_bottom=Decimal(50),
         ),
     ).add(
-        pdf.OrderedList()
+        pdf.OrderedList(vertical_alignment=Alignment.MIDDLE, padding_bottom=Decimal(20))
         .add(
             pdf.Paragraph(
                 """Bender, F. AM., Ekman, A. M. L., et al. (2010), Response to the
@@ -106,29 +113,16 @@ def _footer(
         )
         .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
     ).add(
-        pdf.OrderedList(start_index=7)
-        .add(
+        pdf.TableCell(
             pdf.Paragraph(
-                "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
-            )
+                "Contact:",
+                font="Helvetica-Oblique",
+                font_size=Decimal(20),
+                font_color=pdf.HexColor(color_palette.SUPPORTCOLOR["yellow"]),
+                horizontal_alignment=Alignment.LEFT,
+            ),
+            padding_left=Decimal(25),
         )
-        .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
-        .add(
-            pdf.Paragraph(
-                "Maecenas vitae dui ac nisi aliquam malesuada in consequat sapien."
-            )
-        )
-        .add(
-            pdf.Paragraph(
-                "Nam aliquet ex eget felis lobortis aliquet sit amet ut risus."
-            )
-        )
-        .add(
-            pdf.Paragraph(
-                "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
-            )
-        )
-        .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
     ).add(
         pdf.Paragraph(
             "View digital version!",
@@ -139,6 +133,39 @@ def _footer(
         )
     ).no_borders().layout(
         page, bounding_box
+    )
+    pdf.Paragraph(
+        "*eirik.r.enger@uit.no",
+        font="Courier",
+        horizontal_alignment=Alignment.LEFT,
+        vertical_alignment=Alignment.TOP,
+        padding_left=Decimal(25),
+    ).layout(
+        page,
+        Rectangle(
+            bounding_box.x + bounding_box.width * Decimal(c1 + c2),
+            bounding_box.y,
+            Decimal(128),
+            # 12 is the font size ...
+            Decimal(128 - 12),
+        ),
+    )
+    pdf.Barcode(
+        data="mailto:eirik.r.enger@uit.no",
+        width=Decimal(64),
+        height=Decimal(64),
+        type=pdf.BarcodeType.QR,
+        horizontal_alignment=Alignment.LEFT,
+        vertical_alignment=Alignment.TOP,
+        padding_left=Decimal(25),
+    ).layout(
+        page,
+        Rectangle(
+            bounding_box.x + bounding_box.width * Decimal(c1 + c2),
+            bounding_box.y - Decimal(10),
+            Decimal(128),
+            Decimal(128 - 2 * 12),
+        ),
     )
     pdf.Barcode(
         data="https://github.com/engeir/presentations-files/raw/249364d90e7a42ccc690448bf408cc85d60708f4/2021/fysikermotet/beamer_fysikermotet.pdf",
@@ -181,7 +208,7 @@ def _header(
         horizontal_alignment=Alignment.CENTERED,
     ).layout(page, bounding_box)
     pdf.Heading(
-        "Eirik Rolland Enger, Audun Theodorsen",
+        "Eirik Rolland Enger*, Audun Theodorsen",
         font="Helvetica-Bold",
         font_color=pdf.HexColor(color_palette.MAIN_COLOR),
         font_size=Decimal(25),
@@ -410,7 +437,12 @@ def _paragraph_image(
 
 
 def _caption_previous_object(
-    text: str, layout: PageLayout, location: str = "left", x_shift= Decimal(10), y_shift= Decimal(10), width2clm = Decimal(0.2),
+    text: str,
+    layout: PageLayout,
+    location: str = "left",
+    x_shift=Decimal(10),
+    y_shift=Decimal(10),
+    width2clm=Decimal(0.2),
 ) -> None:
     match location:
         case "left" | "right":
@@ -590,12 +622,33 @@ def create_paragraphs(layout: PageLayout) -> None:
     # )
 
     # RESULTS ------------------------------------------------------------------------ #
+    result_list = pdf.UnorderedList(
+        background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+        border_width=Decimal(1),
+        padding_bottom=Decimal(9),
+        padding_top=Decimal(5),
+        padding_right=Decimal(9),
+        padding_left=Decimal(9),
+    )
+    result_list._font_size = Decimal(15)
     layout.add(_paragraph_heading("Results"))
     layout.add(
-        _paragraph_text(
-            """Here we can mention (1) shape comparison between medium and strong (2)
-            peak comes quite late, 1 to 2 years after the eruption.
-            """
+        result_list.add(
+            pdf.Paragraph(
+                """Here we can mention (1) shape comparison between medium and strong
+                (2) peak comes quite late, 1 to 2 years after the eruption.
+                """,
+                font_size=Decimal(15),
+                fixed_leading=Decimal(10),
+            )
+        ).add(
+            pdf.Paragraph(
+                """Here we can mention (1) shape comparison between medium and strong
+                (2) peak comes quite late, 1 to 2 years after the eruption.
+                """,
+                font_size=Decimal(15),
+                fixed_leading=Decimal(10),
+            )
         )
     )
     layout.add(
