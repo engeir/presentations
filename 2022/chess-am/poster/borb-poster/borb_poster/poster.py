@@ -1,6 +1,7 @@
 """Module for creating a poster with `borb`."""
 
 import os
+import subprocess
 from decimal import Decimal
 from pathlib import Path
 from typing import List, Optional, Tuple, Union
@@ -61,7 +62,7 @@ def _footer(
     pdf.FixedColumnWidthTable(
         number_of_rows=1,
         number_of_columns=4,
-        column_widths=[Decimal(0.15), Decimal(0.32), Decimal(0.32), Decimal(0.21)],
+        column_widths=[Decimal(0.12), Decimal(0.34), Decimal(0.33), Decimal(0.21)],
     ).add(
         # pdf.TableCell(
         pdf.Paragraph(
@@ -70,7 +71,7 @@ def _footer(
             font_color=pdf.HexColor(color_palette.MAIN_COLOR),
             font_size=Decimal(25),
             vertical_alignment=Alignment.MIDDLE,
-            horizontal_alignment=Alignment.CENTERED,
+            horizontal_alignment=Alignment.LEFT,
             padding_bottom=Decimal(50),
         ),
     ).add(
@@ -180,7 +181,7 @@ def _header(
         horizontal_alignment=Alignment.CENTERED,
     ).layout(page, bounding_box)
     pdf.Heading(
-        "Author One, Author Two, Author Three",
+        "Eirik Rolland Enger, Audun Theodorsen",
         font="Helvetica-Bold",
         font_color=pdf.HexColor(color_palette.MAIN_COLOR),
         font_size=Decimal(25),
@@ -364,7 +365,7 @@ def _paragraph_image(
     layout: PageLayout,
     path: str,
     shape: tuple[int, int],
-    local: bool = True,
+    local: bool = False,
     padding_bottom: Decimal = Decimal(0),
     caption: Optional[Union[float, str]] = None,
 ) -> pdf.Image:
@@ -409,7 +410,7 @@ def _paragraph_image(
 
 
 def _caption_previous_object(
-    text: str, layout: PageLayout, location: str = "left"
+    text: str, layout: PageLayout, location: str = "left", x_shift= Decimal(10), y_shift= Decimal(10), width2clm = Decimal(0.2),
 ) -> None:
     match location:
         case "left" | "right":
@@ -417,16 +418,16 @@ def _caption_previous_object(
                 layout._horizontal_margin
                 + layout._current_column_index
                 * (layout._column_width + layout._inter_column_margin)
-                + Decimal(10)
+                + x_shift
             )
-            y = layout._previous_element.bounding_box.y + Decimal(10)
-            width = layout._column_width * Decimal(0.2)
+            y = layout._previous_element.bounding_box.y + y_shift
+            width = layout._column_width * width2clm
             height = layout._previous_element.bounding_box.height - Decimal(20)
         case "bottom":
             x = layout._horizontal_margin + layout._current_column_index * (
                 layout._column_width + layout._inter_column_margin
             )
-            y = layout._previous_element.bounding_box.y + Decimal(10)
+            y = layout._previous_element.bounding_box.y + y_shift
             width = layout._column_width
             height = Decimal(20)
         case _:
@@ -475,18 +476,9 @@ def create_paragraphs(layout: PageLayout) -> None:
         )
     )
     layout.add(
-        _paragraph_text(
-            """We are running CESM2.1.3 with the WACCM6 atmosphere model with middle
-            atmosphere chemistry, which means that it calculates the evolution of
-            stratospheric aerosols from SO2 emissions. The raw emissions file for the
-            default historical run (1850 to 2016) is show below, where each eruption
-            last for six hours per day, starting at noon."""
-        )
-    )
-    layout.add(
         _paragraph_image(
             layout,
-            "/home/een023/Documents/work/cesm/model-runs/e_BASELINE/synthetic/data/output/synthetic_volcanoes_20220421_1126.png",
+            "https://github.com/engeir/presentations-files/raw/dbaf01e59f9061d3ec37f389682d46099af22ccc/2022/chess-am/assets/synthetic_volcanoes_historic_real_data.png",
             (1011, 624),
             caption=0.2,
         )
@@ -512,59 +504,72 @@ def create_paragraphs(layout: PageLayout) -> None:
             Decimal(64),
         ),
     )
-    volc_box = _paragraph_box()
-    _paragraph_text_chunks(
-        [
-            (
-                "normal",
-                "Strategy is to use the already present forcing file and write over it. This resulted in ",
-                True,
-            ),
-            ("code", " volcano-cooking", False),
-            (
-                "normal",
-                ", a python library for generating valid CESM2 volcanic forcing files.",
-                True,
-            ),
-        ],
-        volc_box,
-    )
-    _paragraph_text_chunks(
-        [
-            ("bold", "volcanoes.nc ", True),
-            ("normal", "are so very ", True),
-            ("code", "cool", False),
-            ("normal", ".", True),
-        ],
-        volc_box,
-    )
-    _paragraph_text(
-        """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
-        forcing file loaded by CESM2, but first need to generate raw synthetic forcing
-        data that is used to create the full forcing file. Example: Volcanic eruptions
-        from the last 150 years are included in CESM2 via a file which, if we omit
-        location in space, has volcanoes as shown below.""",
-        volc_box,
-    )
-    layout.add(volc_box)
+    # volc_box = _paragraph_box()
+    # _paragraph_text_chunks(
+    #     [
+    #         (
+    #             "normal",
+    #             "Strategy is to use the already present forcing file and write over it. This resulted in ",
+    #             True,
+    #         ),
+    #         ("code", " volcano-cooking", False),
+    #         (
+    #             "normal",
+    #             ", a python library for generating valid CESM2 volcanic forcing files.",
+    #             True,
+    #         ),
+    #     ],
+    #     volc_box,
+    # )
+    # _paragraph_text_chunks(
+    #     [
+    #         ("bold", "volcanoes.nc ", True),
+    #         ("normal", "are so very ", True),
+    #         ("code", "cool", False),
+    #         ("normal", ".", True),
+    #     ],
+    #     volc_box,
+    # )
+    # _paragraph_text(
+    #     """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
+    #     forcing file loaded by CESM2, but first need to generate raw synthetic forcing
+    #     data that is used to create the full forcing file. Example: Volcanic eruptions
+    #     from the last 150 years are included in CESM2 via a file which, if we omit
+    #     location in space, has volcanoes as shown below.""",
+    #     volc_box,
+    # )
+    # layout.add(volc_box)
     layout.add(
         _paragraph_image(
             layout,
-            "/home/een023/Documents/presentations-files/2022/chess-am/assets/percentiles-overlaid.png",
-            shape=(1201, 744),
-            # shape=(2022, 624),
+            "volcano-cooking-flow.png",
+            shape=(1792, 2218),
+            caption=0.1,
             local=True,
-            caption="bottom",
         )
     )
     _caption_previous_object(
-        """Aerosol optical depth and temperature response obtained from four different
-        simulations using identical volcanic eruptions, shifted in time by three month,
-        placing one eruption in each season of the year. The black lines show the
-        median, while the red shading lie between the 2.5th and 97.5th percentiles.
+        """volcano-cooking generates synthetic data used as input to an NCL script, also
+        present in volcano-cooking, which is generating the full forcing file. Raw
+        emission data shown in the image titled "Real data" is extracted from the
+        forcing file present in CESM2, while data shown in the image titled "Sythetic
+        data" is generated with volcano-cooking. From the raw data, via an NCL script,
+        the forcing is fed to CESM2.
         """,
         layout,
-        location="bottom",
+        location="left",
+        width2clm=Decimal(0.3),
+        # location="bottom",
+        y_shift=-Decimal(100),
+    )
+    layout.add(
+        _paragraph_text(
+            """We are running CESM2.1.3 with the WACCM6 atmosphere model with middle
+            atmosphere chemistry, which means that it calculates the evolution of
+            stratospheric aerosols from SO2 emissions. The raw emissions file for the
+            default historical run (1850 to 2016) is show below, where each eruption
+            last for six hours per day, starting at noon."""
+        )
     )
     # scale_down = 3
     # layout.add(
@@ -588,8 +593,8 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(_paragraph_heading("Results"))
     layout.add(
         _paragraph_text(
-            """Here we can mention (1) shape comparison between medium and
-            strong (2) peak comes quite late, 1 to 2 years after the eruption.
+            """Here we can mention (1) shape comparison between medium and strong (2)
+            peak comes quite late, 1 to 2 years after the eruption.
             """
         )
     )
@@ -605,9 +610,10 @@ def create_paragraphs(layout: PageLayout) -> None:
     _caption_previous_object(
         """Comparison between the waveform of the temperature response from the
         smaller and the larger volcanic eruption. The black lines are medians
-        from ensembles of four, while the shading cover from the 5th to the
-        95th percentile. Both lines are coloured black for better visibility,
-        with the more noisy signal corresponding to the red, wider shading.
+        from ensembles of four simulations, while the shading cover from the
+        5th to the 95th percentile. Both lines are coloured black for better
+        visibility, with the more noisy signal corresponding to the red, wider
+        shading.
         """,
         layout,
         location="left",
@@ -616,18 +622,12 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(_paragraph_heading("Future work and use cases"))
     layout.add(
         _paragraph_text(
-            """We can use this to look at how forcing at specific locations affect the
-        global climate, as well as how a given region and neighbouring regions is
-        affected. One particularly interesting region may be the arctic; we could then
-        place a big eruption in Greenland and observe how the climate changes from
-        there.\n
-
-        We can use this to look at how forcing at specific locations affect the
-        global climate, as well as how a given region and neighbouring regions is
-        affected. One particularly interesting region may be the arctic; we could then
-        place a big eruption in Greenland and observe how the climate changes from
-        there.
-        """
+            """We can use this to look at how forcing at specific locations
+            affect the global climate, as well as how a given region and
+            neighbouring regions is affected. One particularly interesting
+            region may be the arctic; we could then place a big eruption in
+            Greenland and observe how the climate changes from there.
+            """
         )
     )
     layout.add(
@@ -635,8 +635,17 @@ def create_paragraphs(layout: PageLayout) -> None:
             layout,
             "https://github.com/engeir/presentations-files/raw/f71580dcb981c2e827b7f9bde3978390fe60840f/2022/chess-am/assets/AEROD_v20220404-composite.png",
             shape=(1191, 754),
-            local=False,
+            caption="bottom",
         )
+    )
+    _caption_previous_object(
+        """Aerosol optical depth and temperature response obtained from four different
+        simulations using identical volcanic eruptions, shifted in time by three month,
+        placing one eruption in each season of the year. The black lines show the
+        median, while the red shading lie between the 2.5th and 97.5th percentiles.
+        """,
+        layout,
+        location="bottom",
     )
     _paragraph_qr_code(
         "https://github.com/engeir/presentations-files/raw/14d24ee6343b4b80be8476eb9e2b76bbfadd8dc5/2022/chess-am/assets/AEROD_v20220404.mp4"
@@ -679,6 +688,23 @@ def custom_layout(
 
 def create_poster() -> None:
     """Create a poster with `borb`."""
+    # Update diagrams
+    # NOTE: This depends on Grapviz and imagemagick
+    script = os.path.join(os.getcwd(), "borb_poster", "flow_diagrams.py")
+    subprocess.call(["python", script])
+    subprocess.call(
+        [
+            "convert",
+            "-density",
+            "300",
+            "-trim",
+            "volcano-cooking-flow.pdf",
+            "-quality",
+            "100",
+            "volcano-cooking-flow.png",
+        ]
+    )
+
     doc = pdf.Document()
     width = PageSize.A2_PORTRAIT.value[0]
     height = PageSize.A2_PORTRAIT.value[1]
