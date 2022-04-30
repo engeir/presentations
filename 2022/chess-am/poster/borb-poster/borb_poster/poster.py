@@ -683,10 +683,10 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_image(
             layout,
-            "/home/een023/Documents/presentations-files/2022/chess-am/assets/compare-waveform-integrate.png",
+            "https://github.com/engeir/presentations-files/raw/84e2b7adbe528f134c003f956d499b6aa3898b5f/2022/chess-am/assets/compare-waveform-integrate.png",
             shape=(1011, 624),
-            local=True,
             caption=0.2,
+            padding_bottom=Decimal(0),
         )
     )
     _caption_previous_object(
