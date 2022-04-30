@@ -654,23 +654,31 @@ def create_paragraphs(layout: PageLayout) -> None:
 
     layout.add(_paragraph_heading("Results"))
     layout.add(
-        result_list.add(
-            pdf.Paragraph(
-                """Here we can mention (1) shape comparison between medium and strong
-                (2) peak comes quite late, 1 to 2 years after the eruption.
+        pdf.FixedColumnWidthTable(
+            number_of_rows=2,
+            number_of_columns=1,
+            background_color=pdf.HexColor(color_palette.MAIN_COLOR),
+        )
+        .add(
+            _paragraph_text(
+                """The shape of the temperature response to eruptions of different
+                magnitude is not the same. Temperature peaks later when the climate
+                system is forced with a larger eruption compared to the case of forcing
+                with a smaller eruption.
                 """,
-                font_size=Decimal(15),
-                fixed_leading=Decimal(10),
-            )
-        ).add(
-            pdf.Paragraph(
-                """Here we can mention (1) shape comparison between medium and strong
-                (2) peak comes quite late, 1 to 2 years after the eruption.
-                """,
-                font_size=Decimal(15),
-                fixed_leading=Decimal(10),
+                start_bold=True,
             )
         )
+        .add(
+            _paragraph_text(
+                """In both cases, with smaller and larger eruptions, the temperature has
+                its strongest response after one to two years, and do not reach
+                equilibrium within the first eight years.
+                """,
+                start_bold=True,
+            )
+        )
+        .no_borders(),
     )
     layout.add(
         _paragraph_image(
