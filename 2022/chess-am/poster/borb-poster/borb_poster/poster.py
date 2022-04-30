@@ -562,11 +562,11 @@ def create_paragraphs(layout: PageLayout) -> None:
         _paragraph_text(
             """In order to estimate the global temperature response and climate
             sensitivity to radiative forcing, volcanic activity is an important testbed.
-            This is done using a non-parametric approach, contrary to most previous
-            attempts (e.g. [1, 2]). In order to have good datasets with high resolution
-            and eruptions of correct physical properties and frequency, simulations with
-            custom made synthetic volcanic data is run using the Community Earth System
-            model, version 2 (CESM2)."""
+            Estimates are made using a non-parametric approach, contrary to most
+            previous attempts (e.g. [1, 2]). In order to have good datasets with high
+            resolution and eruptions of correct physical properties and frequency,
+            simulations with custom made synthetic volcanic data is run using the
+            Community Earth System model, version 2 (CESM2)."""
         )
     )
     layout.add(
@@ -578,9 +578,10 @@ def create_paragraphs(layout: PageLayout) -> None:
         )
     )
     _caption_previous_object(
-        """Emissions file used in CESM2 to simulate volcanic eruptions between 1850 and
-        2016. Each bar represent the total emission for a given day, with emissions
-        lasting six hours per day.""",
+        """Figure 1: Emissions file used in CESM2 to simulate volcanic eruptions between
+        1850 and 2016. Each bar represent the total emission for a given day, with
+        emissions lasting six hours per day.
+        """,
         layout,
         location="left",
     )
@@ -598,57 +599,22 @@ def create_paragraphs(layout: PageLayout) -> None:
             Decimal(64),
         ),
     )
-    # volc_box = _paragraph_box()
-    # _paragraph_text_chunks(
-    #     [
-    #         (
-    #             "normal",
-    #             "Strategy is to use the already present forcing file and write over it. This resulted in ",
-    #             True,
-    #         ),
-    #         ("code", " volcano-cooking", False),
-    #         (
-    #             "normal",
-    #             ", a python library for generating valid CESM2 volcanic forcing files.",
-    #             True,
-    #         ),
-    #     ],
-    #     volc_box,
-    # )
-    # _paragraph_text_chunks(
-    #     [
-    #         ("bold", "volcanoes.nc ", True),
-    #         ("normal", "are so very ", True),
-    #         ("code", "cool", False),
-    #         ("normal", ".", True),
-    #     ],
-    #     volc_box,
-    # )
-    # _paragraph_text(
-    #     """Want to run CESM2 with synthetic volcanic eruptions. Want to recreate the
-    #     forcing file loaded by CESM2, but first need to generate raw synthetic forcing
-    #     data that is used to create the full forcing file. Example: Volcanic eruptions
-    #     from the last 150 years are included in CESM2 via a file which, if we omit
-    #     location in space, has volcanoes as shown below.""",
-    #     volc_box,
-    # )
-    # layout.add(volc_box)
     layout.add(
         _paragraph_image(
             layout,
             "volcano-cooking-flow.png",
             shape=(1792, 2218),
-            caption=0.1,
+            caption=0.05,
             local=True,
         )
     )
     _caption_previous_object(
-        """volcano-cooking generates synthetic data used as input to an NCL script, also
-        present in volcano-cooking, which is generating the full forcing file. Raw
-        emission data shown in the image titled "Real data" is extracted from the
-        forcing file present in CESM2, while data shown in the image titled "Sythetic
-        data" is generated with volcano-cooking. From the raw data, via an NCL script,
-        the forcing is fed to CESM2.
+        """Figure 2: volcano-cooking generates synthetic data used as input to an NCL
+        script, also present in volcano-cooking, which is generating the full forcing
+        file. Raw emission data shown in the image titled "Real data" is extracted from
+        the forcing file present in CESM2, while data shown in the image titled
+        "Sythetic data" is generated with volcano-cooking. From the raw data, via an NCL
+        script, the forcing is fed to CESM2.
         """,
         layout,
         location="left",
@@ -661,8 +627,9 @@ def create_paragraphs(layout: PageLayout) -> None:
             """We are running CESM2.1.3 with the WACCM6 atmosphere model with middle
             atmosphere chemistry, which means that it calculates the evolution of
             stratospheric aerosols from SO2 emissions. The raw emissions file for the
-            default historical run (1850 to 2016) is show below, where each eruption
-            last for six hours per day, starting at noon."""
+            default historical run (1850 to 2016) is show in Figure 1, where each
+            eruption last for six hours per day, starting at noon.
+            """
         )
     )
     # scale_down = 3
@@ -684,15 +651,7 @@ def create_paragraphs(layout: PageLayout) -> None:
     # )
 
     # RESULTS ------------------------------------------------------------------------ #
-    result_list = pdf.UnorderedList(
-        background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
-        border_width=Decimal(1),
-        padding_bottom=Decimal(9),
-        padding_top=Decimal(5),
-        padding_right=Decimal(9),
-        padding_left=Decimal(9),
-    )
-    result_list._font_size = Decimal(15)
+
     layout.add(_paragraph_heading("Results"))
     layout.add(
         result_list.add(
@@ -723,12 +682,11 @@ def create_paragraphs(layout: PageLayout) -> None:
         )
     )
     _caption_previous_object(
-        """Comparison between the waveform of the temperature response from the
-        smaller and the larger volcanic eruption. The black lines are medians
-        from ensembles of four simulations, while the shading cover from the
-        5th to the 95th percentile. Both lines are coloured black for better
-        visibility, with the more noisy signal corresponding to the red, wider
-        shading.
+        """Figure 3: Comparison between the waveform of the temperature response from
+        the smaller and the larger volcanic eruption. The black lines are medians from
+        ensembles of four simulations, while the shading cover from the 5th to the 95th
+        percentile. Both lines are coloured black for better visibility, with the more
+        noisy signal corresponding to the red, wider shading.
         """,
         layout,
         location="left",
@@ -737,11 +695,14 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(_paragraph_heading("Future work and use cases"))
     layout.add(
         _paragraph_text(
-            """We can use this to look at how forcing at specific locations
-            affect the global climate, as well as how a given region and
-            neighbouring regions is affected. One particularly interesting
-            region may be the arctic; we could then place a big eruption in
-            Greenland and observe how the climate changes from there.
+            """We can use this to look at how forcing at specific locations affect the
+            global climate, as well as how a given region and neighbouring regions is
+            affected. One particularly interesting region may be the arctic; we could
+            then place a big eruption in Greenland and observe how the climate changes
+            from there. With this setup we have good control over exact timing and
+            strength of eruptions, and can design experiments suitable for running the
+            deconvolution algorithm which introduces the non-parametric approach to
+            estimating the temperature response.
             """
         )
     )
@@ -755,10 +716,11 @@ def create_paragraphs(layout: PageLayout) -> None:
         )
     )
     _caption_previous_object(
-        """Aerosol optical depth and temperature response obtained from four different
-        simulations using identical volcanic eruptions, shifted in time by three month,
-        placing one eruption in each season of the year. The black lines show the
-        median, while the red shading lie between the 2.5th and 97.5th percentiles.
+        """Figure 4: Aerosol optical depth and temperature response obtained from four
+        different simulations using identical volcanic eruptions, shifted in time by
+        three month, placing one eruption in each season of the year. The black lines
+        show the median, while the red shading lie between the 2.5th and 97.5th
+        percentiles.
         """,
         layout,
         location="bottom",
