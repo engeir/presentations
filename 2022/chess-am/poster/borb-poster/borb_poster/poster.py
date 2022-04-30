@@ -8,13 +8,13 @@ from typing import List, Optional, Tuple, Union
 
 import borb.pdf as pdf
 from borb.pdf.canvas.geometry.rectangle import Rectangle
+from borb.pdf.canvas.layout.emoji.emoji import Emoji, Emojis
 from borb.pdf.canvas.layout.layout_element import Alignment
 from borb.pdf.canvas.layout.page_layout.page_layout import PageLayout
 from borb.pdf.canvas.layout.text.chunk_of_text import ChunkOfText
 from borb.pdf.canvas.layout.text.chunks_of_text import HeterogeneousParagraph
 from borb.pdf.page.page_size import PageSize
 from borb_poster import color_palette, shapes
-from borb.pdf.canvas.layout.emoji.emoji import Emoji, Emojis
 
 try:
     from rich import traceback
