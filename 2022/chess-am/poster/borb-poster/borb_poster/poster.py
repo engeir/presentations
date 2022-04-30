@@ -774,3 +774,8 @@ def create_poster() -> None:
 
     with open("poster.pdf", "wb") as pdf_file_handle:
         pdf.PDF.dumps(pdf_file_handle, doc)
+
+    # Clean up png's from diagram image
+    pngs = [i for i in os.listdir() if ".png" in i]
+    subprocess.call(["rm", *pngs])
+    subprocess.call(["rm", "volcano-cooking-flow.pdf"])
