@@ -456,6 +456,7 @@ def _paragraph_image(
     local: bool = False,
     padding_bottom: Decimal = Decimal(0),
     caption: Optional[Union[float, str]] = None,
+    scale: float = 1.0,
 ) -> pdf.Image:
     if local:
         print(
@@ -466,7 +467,7 @@ def _paragraph_image(
     else:
         pth = path
     width, height = shape
-    cw = layout._column_width
+    cw = layout._column_width * Decimal(scale)
     align = Alignment.CENTERED
     if width > cw:
         width = cw
@@ -750,6 +751,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             "https://github.com/engeir/presentations-files/raw/f71580dcb981c2e827b7f9bde3978390fe60840f/2022/chess-am/assets/AEROD_v20220404-composite.png",
             shape=(1191, 754),
             caption="bottom",
+            scale=0.9,
         )
     )
     _caption_previous_object(
