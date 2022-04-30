@@ -314,6 +314,7 @@ def _paragraph_heading(text: str, dark: bool = False) -> HeterogeneousParagraph:
             padding_bottom=Decimal(10),
             padding_left=Decimal(10),
             padding_right=Decimal(10),
+            margin_top=Decimal(0),
         )
         fs = 25
         pb, pl, pr = Decimal(7), Decimal(2), Decimal(5)
@@ -385,7 +386,7 @@ def _paragraph_text(
                 paragraph.add(
                     ChunkOfText(
                         line + " ",
-                        font_size=Decimal(15),
+                        font_size=Decimal(13),
                         font="Helvetica-Bold",
                         font_color=pdf.HexColor("#dddddd"),
                     )
@@ -393,7 +394,7 @@ def _paragraph_text(
                 continue
         paragraph.add(
             ChunkOfText(
-                line + " ", font_size=Decimal(15), font_color=pdf.HexColor("#dddddd")
+                line + " ", font_size=Decimal(13), font_color=pdf.HexColor("#dddddd")
             )
         )
     return paragraph
