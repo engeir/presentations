@@ -18,6 +18,7 @@ from borb.pdf.canvas.layout.emoji.emoji import Emoji, Emojis
 
 try:
     from rich import traceback
+
     traceback.install()
 except ImportError:
     pass
