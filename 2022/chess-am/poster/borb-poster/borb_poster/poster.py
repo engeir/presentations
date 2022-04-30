@@ -88,7 +88,10 @@ def _footer(
         )
         .add(
             pdf.Paragraph(
-                "Maecenas vitae dui ac nisi aliquam malesuada in consequat sapien."
+                """Dong, Y., Proistosescu, C., et al. (2019), Attributing Historical and
+                Future Evolution of Radiative Feedbacks to Regional Warming Patterns
+                using a Green's Function Approach: The Preeminence of the Western
+                Pacific."""
             )
         )
         .add(
@@ -704,10 +707,9 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_text(
             """We can use this to look at how forcing at specific locations affect the
-            global climate, as well as how a given region and neighbouring regions is
-            affected. One particularly interesting region may be the arctic; we could
-            then place a big eruption in Greenland and observe how the climate changes
-            from there. With this setup we have good control over exact timing and
+            global climate. One important region is the western Pacific, where other
+            studies have been using sea surface temperature (SST) patterns to look at
+            warming patterns [3]. With this setup we have good control over exact timing and
             strength of eruptions, and can design experiments suitable for running the
             deconvolution algorithm which introduces the non-parametric approach to
             estimating the temperature response.
