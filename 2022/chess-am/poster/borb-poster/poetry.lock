@@ -45,11 +45,11 @@ uvloop = ["uvloop (>=0.15.2)"]
 [[package]]
 name = "borb"
 version = "2.0.24"
-description = "borb is a library for reading, creating and manipulating PDF files in python."
+description = ""
 category = "main"
 optional = false
 python-versions = ">=3.6"
-develop = true
+develop = false
 
 [package.dependencies]
 fonttools = ">=4.22.1"
@@ -59,8 +59,10 @@ qrcode = {version = ">=6.1", extras = ["pil"]}
 requests = ">=2.24.0"
 
 [package.source]
-type = "directory"
-url = "../../../../../../projects/borb"
+type = "git"
+url = "https://github.com/engeir/borb.git"
+reference = "add-list-start-index"
+resolved_reference = "2d4baf127819c944a940293491ac0555901a68e7"
 
 [[package]]
 name = "certifi"
@@ -425,7 +427,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "a72c3a16c2db8019dd2c094a7903664aa870a74407c7ea27ea79a5219bb6964f"
+content-hash = "ab6ee8a7c9e39deeb631ca6c7c2cd3c592c59f4dd58544f5a85b065bb4ef7433"
 
 [metadata.files]
 atomicwrites = [

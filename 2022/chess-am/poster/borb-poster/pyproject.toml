@@ -9,8 +9,8 @@ make-poster = "borb_poster.__main__:main"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
-borb = {path = "../../../../../../projects/borb", develop = true}
 diagrams = "^0.21.1"
+borb = {git = "https://github.com/engeir/borb.git", rev = "add-list-start-index"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
