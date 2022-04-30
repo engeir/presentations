@@ -566,28 +566,13 @@ def create_paragraphs(layout: PageLayout) -> None:
         _paragraph_text(
             """In order to estimate the global temperature response and climate
             sensitivity to radiative forcing, volcanic activity is an important testbed.
-            Estimates are made using a non-parametric approach, contrary to most
+            Estimates are to be made using a non-parametric approach, contrary to most
             previous attempts (e.g. [1, 2]). In order to have good datasets with high
             resolution and eruptions of correct physical properties and frequency,
             simulations with custom made synthetic volcanic data is run using the
-            Community Earth System model, version 2 (CESM2)."""
+            Community Earth System model, version 2 (CESM2).
+            """
         )
-    )
-    layout.add(
-        _paragraph_image(
-            layout,
-            "https://github.com/engeir/presentations-files/raw/dbaf01e59f9061d3ec37f389682d46099af22ccc/2022/chess-am/assets/synthetic_volcanoes_historic_real_data.png",
-            (1011, 624),
-            caption=0.2,
-        )
-    )
-    _caption_previous_object(
-        """Figure 1: Emissions file used in CESM2 to simulate volcanic eruptions between
-        1850 and 2016. Each bar represent the total emission for a given day, with
-        emissions lasting six hours per day.
-        """,
-        layout,
-        location="left",
     )
 
     # CREATING VOLCANOES ------------------------------------------------------------- #
@@ -604,29 +589,6 @@ def create_paragraphs(layout: PageLayout) -> None:
         ),
     )
     layout.add(
-        _paragraph_image(
-            layout,
-            "volcano-cooking-flow.png",
-            shape=(1792, 2218),
-            caption=0.05,
-            local=True,
-        )
-    )
-    _caption_previous_object(
-        """Figure 2: volcano-cooking generates synthetic data used as input to an NCL
-        script, also present in volcano-cooking, which is generating the full forcing
-        file. Raw emission data shown in the image titled "Real data" is extracted from
-        the forcing file present in CESM2, while data shown in the image titled
-        "Sythetic data" is generated with volcano-cooking. From the raw data, via an NCL
-        script, the forcing is fed to CESM2.
-        """,
-        layout,
-        location="left",
-        width2clm=Decimal(0.3),
-        # location="bottom",
-        y_shift=-Decimal(100),
-    )
-    layout.add(
         _paragraph_text(
             """We are running CESM2.1.3 with the WACCM6 atmosphere model with middle
             atmosphere chemistry, which means that it calculates the evolution of
@@ -635,6 +597,45 @@ def create_paragraphs(layout: PageLayout) -> None:
             eruption last for six hours per day, starting at noon.
             """
         )
+    )
+    layout.add(
+        _paragraph_image(
+            layout,
+            "https://github.com/engeir/presentations-files/raw/dbaf01e59f9061d3ec37f389682d46099af22ccc/2022/chess-am/assets/synthetic_volcanoes_historic_real_data.png",
+            (1011, 624),
+            caption=0.2,
+        )
+    )
+    _caption_previous_object(
+        """Figure 1: Emissions file used in historical runs of CESM2 to simulate
+        volcanic eruptions between 1850 and 2016. Each bar represent the total emission
+        for a given day, with emissions lasting six hours per day.
+        """,
+        layout,
+        location="left",
+    )
+    layout.add(
+        _paragraph_image(
+            layout,
+            "volcano-cooking-flow.png",
+            shape=(1792, 2218),
+            caption=0.12,
+            local=True,
+        )
+    )
+    _caption_previous_object(
+        """Figure 2: volcano-cooking generates synthetic data used as input to an NCL
+        script, also present in volcano-cooking, which is generating the full forcing
+        file. Raw emission data shown in the image titled "Real data" is extracted from
+        the forcing file present in CESM2, while data shown in the image titled
+        "Synthetic data" is generated with volcano-cooking. From the raw data, via an
+        NCL script, the forcing is fed to CESM2.
+        """,
+        layout,
+        location="left",
+        width2clm=Decimal(0.3),
+        # location="bottom",
+        # y_shift=-Decimal(100),
     )
     # scale_down = 3
     # layout.add(
@@ -690,7 +691,6 @@ def create_paragraphs(layout: PageLayout) -> None:
             "https://github.com/engeir/presentations-files/raw/84e2b7adbe528f134c003f956d499b6aa3898b5f/2022/chess-am/assets/compare-waveform-integrate.png",
             shape=(1011, 624),
             caption=0.2,
-            padding_bottom=Decimal(0),
         )
     )
     _caption_previous_object(
