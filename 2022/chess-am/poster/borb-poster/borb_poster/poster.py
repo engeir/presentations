@@ -65,24 +65,13 @@ def _footer(
     margin_y: Decimal,
     width: Decimal,
 ) -> None:
-    c1, c2, c3, c4 = 0.15, 0.52, 0.12, 0.21
+    c1, c2, c3, c4 = 0.45, 0.22, 0.12, 0.21
     pdf.FixedColumnWidthTable(
         number_of_rows=1,
-        number_of_columns=4,
-        column_widths=[Decimal(c1), Decimal(c2), Decimal(c3), Decimal(c4)],
+        number_of_columns=3,
+        column_widths=[Decimal(c1 + c2), Decimal(c3), Decimal(c4)],
     ).add(
-        # pdf.TableCell(
-        pdf.Paragraph(
-            "References",
-            font="Helvetica-Bold",
-            font_color=pdf.HexColor(color_palette.MAIN_COLOR),
-            font_size=Decimal(25),
-            vertical_alignment=Alignment.MIDDLE,
-            horizontal_alignment=Alignment.LEFT,
-            padding_bottom=Decimal(50),
-        ),
-    ).add(
-        pdf.OrderedList(vertical_alignment=Alignment.MIDDLE, padding_bottom=Decimal(20))
+        pdf.OrderedList(vertical_alignment=Alignment.MIDDLE, padding_top=Decimal(15))
         .add(
             pdf.Paragraph(
                 """Bender, F. AM., Ekman, A. M. L., et al. (2010), Response to the
@@ -133,6 +122,24 @@ def _footer(
         )
     ).no_borders().layout(
         page, bounding_box
+    )
+    pdf.Paragraph(
+        "References",
+        font="Helvetica-Bold",
+        font_color=pdf.HexColor(color_palette.MAIN_COLOR),
+        font_size=Decimal(25),
+        vertical_alignment=Alignment.TOP,
+        horizontal_alignment=Alignment.LEFT,
+        padding_bottom=Decimal(50),
+    ).layout(
+        page,
+        Rectangle(
+            bounding_box.x,
+            bounding_box.y,
+            Decimal(128),
+            # 25 - 20, diff in font sizes ... +1 for the looks
+            bounding_box.height + Decimal(6),
+        ),
     )
     pdf.Paragraph(
         "*eirik.r.enger@uit.no",
@@ -225,6 +232,23 @@ def _header(
         padding_bottom=Decimal(10),
     ).layout(page, bounding_box)
 
+    pdf.Heading(
+        "CHESS AM 2022",
+        font="Helvetica-Bold-Oblique",
+        font_size=Decimal(20),
+        font_color=pdf.HexColor(color_palette.MAIN_COLOR),
+        horizontal_alignment=Alignment.LEFT,
+        vertical_alignment=Alignment.TOP,
+        padding_left=Decimal(25),
+    ).layout(
+        page,
+        Rectangle(
+            Decimal(40 * 3),
+            height - img_h - header_height + 2 * margin_y,
+            bounding_box.width,
+            Decimal(25),
+        ),
+    )
     pdf.Image(
         Path(os.path.join(os.getcwd(), "assets", "UiT_Logo_Eng_2l_Bla_RGB.png")),
         width=img_w,
