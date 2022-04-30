@@ -9,7 +9,6 @@ make-poster = "borb_poster.__main__:main"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
-volcano-cooking = {git = "https://github.com/engeir/volcano-cooking.git", rev = "main"}
 borb = {path = "../../../../../../projects/borb", develop = true}
 diagrams = "^0.21.1"
 
