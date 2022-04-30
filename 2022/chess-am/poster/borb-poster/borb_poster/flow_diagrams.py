@@ -43,7 +43,7 @@ with Diagram(
     with Cluster("CESM2 Input Forcing File"):
         with Cluster("CESM2 output"):
 
-            rad_diff_temp_url = "https://github.com/engeir/presentations-files/raw/7463c40eb08423ce7a22b423a84a2cdee7b3ce88/2022/chess-am/assets/rad_diff-temp-percentiles-overlaid.png"
+            rad_diff_temp_url = "https://github.com/engeir/presentations-files/raw/84e2b7adbe528f134c003f956d499b6aa3898b5f/2022/chess-am/assets/rad_diff-temp-percentiles-overlaid.png"
             rad_diff_temp_icon = "rad_diff_temp.png"
             urlretrieve(rad_diff_temp_url, rad_diff_temp_icon)
 
