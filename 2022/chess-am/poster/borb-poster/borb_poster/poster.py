@@ -303,23 +303,42 @@ def create_header_footer(page: pdf.Page, header_height: Decimal) -> None:
     _footer(page, r_bot, header_height, margin_y, width)
 
 
-def _paragraph_heading(text: str) -> HeterogeneousParagraph:
-    paragraph = HeterogeneousParagraph([])
+def _paragraph_heading(text: str, dark: bool = False) -> HeterogeneousParagraph:
+    if dark:
+        paragraph = HeterogeneousParagraph(
+            [],
+            background_color=pdf.HexColor(color_palette.MAIN_COLOR),
+            padding_bottom=Decimal(10),
+            padding_left=Decimal(10),
+            padding_right=Decimal(10),
+        )
+        fs = 25
+        pb, pl, pr = Decimal(7), Decimal(2), Decimal(5)
+        background_color = pdf.HexColor(color_palette.MAIN_COLOR)
+        font_color = pdf.HexColor("#ffffff")
+    else:
+        paragraph = HeterogeneousParagraph([])
+        fs = 30
+        pb, pl, pr = Decimal(3), Decimal(0), Decimal(0)
+        font_color = pdf.HexColor("#000000")
+        background_color = None
     volc: Emoji = Emojis.VOLCANO.value
-    volc.set_font_size(Decimal(30))
+    volc.set_font_size(Decimal(fs))
     paragraph.add(volc)
     paragraph.add(ChunkOfText("    "))
     paragraph.add(
         ChunkOfText(
             text,
             font="Helvetica-Bold-Oblique",
-            font_size=Decimal(30),
-            # background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+            font_size=Decimal(fs),
+            font_color=font_color,
+            background_color=background_color,
             border_color=pdf.HexColor(color_palette.SUPPORTCOLOR["red"]),
             border_width=Decimal(1),
             border_bottom=True,
-            padding_bottom=Decimal(3),
-            # border_radius_bottom_left=Decimal(10),
+            padding_bottom=pb,
+            padding_left=pl,
+            padding_right=pr,
         )
     )
     return paragraph
@@ -328,7 +347,7 @@ def _paragraph_heading(text: str) -> HeterogeneousParagraph:
 def _paragraph_box(padding_bottom: Decimal = Decimal(9)) -> HeterogeneousParagraph:
     h = HeterogeneousParagraph(
         [],
-        background_color=pdf.HexColor(color_palette.SUPPORTCOLOR["light blue"]),
+        background_color=pdf.HexColor(color_palette.MAIN_COLOR),
         # border_top=True,
         # border_right=True,
         # border_bottom=True,
@@ -343,20 +362,37 @@ def _paragraph_box(padding_bottom: Decimal = Decimal(9)) -> HeterogeneousParagra
         padding_top=Decimal(5),
         padding_right=Decimal(9),
         padding_left=Decimal(9),
-        fixed_leading=Decimal(10),
+        fixed_leading=Decimal(6),
     )
     h._respect_newlines_in_text = True
     return h
 
 
 def _paragraph_text(
-    text: str, paragraph: Optional[HeterogeneousParagraph] = None
+    text: str,
+    paragraph: Optional[HeterogeneousParagraph] = None,
+    start_bold: bool = False,
 ) -> HeterogeneousParagraph:
     if paragraph is None:
         paragraph = _paragraph_box()
 
-    for line in text.split():
-        paragraph.add(ChunkOfText(line + " ", font_size=Decimal(15)))
+    for i, line in enumerate(text.split()):
+        if start_bold:
+            if i < 2:
+                paragraph.add(
+                    ChunkOfText(
+                        line + " ",
+                        font_size=Decimal(15),
+                        font="Helvetica-Bold",
+                        font_color=pdf.HexColor("#dddddd"),
+                    )
+                )
+                continue
+        paragraph.add(
+            ChunkOfText(
+                line + " ", font_size=Decimal(15), font_color=pdf.HexColor("#dddddd")
+            )
+        )
     return paragraph
 
 
