@@ -348,8 +348,18 @@ def _paragraph_heading(text: str, dark: bool = False) -> HeterogeneousParagraph:
     return paragraph
 
 
-def _paragraph_box(padding_bottom: Decimal = Decimal(9)) -> HeterogeneousParagraph:
-    h = HeterogeneousParagraph(
+def _paragraph_box(
+    padding_bottom: Decimal = Decimal(9), no_margins: bool = False
+) -> HeterogeneousParagraph:
+    if no_margins:
+        return HeterogeneousParagraph(
+            [],
+            background_color=pdf.HexColor(color_palette.MAIN_COLOR),
+            border_color=pdf.HexColor(color_palette.SUPPORTCOLOR["red"]),
+            border_width=Decimal(1),
+            fixed_leading=Decimal(6),
+        )
+    return HeterogeneousParagraph(
         [],
         background_color=pdf.HexColor(color_palette.MAIN_COLOR),
         border_radius_top_left=Decimal(8),
@@ -364,17 +374,16 @@ def _paragraph_box(padding_bottom: Decimal = Decimal(9)) -> HeterogeneousParagra
         padding_left=Decimal(9),
         fixed_leading=Decimal(6),
     )
-    h._respect_newlines_in_text = True
-    return h
 
 
 def _paragraph_text(
     text: str,
     paragraph: Optional[HeterogeneousParagraph] = None,
     start_bold: bool = False,
+    no_margins: bool = False,
 ) -> HeterogeneousParagraph:
     if paragraph is None:
-        paragraph = _paragraph_box()
+        paragraph = _paragraph_box(no_margins=no_margins)
 
     for i, line in enumerate(text.split()):
         if start_bold:
@@ -651,9 +660,17 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(_paragraph_heading("Results"))
     layout.add(
         pdf.FixedColumnWidthTable(
+            border_radius_top_left=Decimal(8),
+            border_radius_top_right=Decimal(8),
+            border_radius_bottom_right=Decimal(8),
+            border_radius_bottom_left=Decimal(8),
             number_of_rows=2,
             number_of_columns=1,
             background_color=pdf.HexColor(color_palette.MAIN_COLOR),
+            padding_bottom=Decimal(9),
+            padding_top=Decimal(5),
+            padding_right=Decimal(9),
+            padding_left=Decimal(9),
         )
         .add(
             _paragraph_text(
@@ -663,6 +680,7 @@ def create_paragraphs(layout: PageLayout) -> None:
                 with a smaller eruption.
                 """,
                 start_bold=True,
+                no_margins=True,
             )
         )
         .add(
@@ -672,6 +690,7 @@ def create_paragraphs(layout: PageLayout) -> None:
                 equilibrium within the first eight years.
                 """,
                 start_bold=True,
+                no_margins=True,
             )
         )
         .no_borders(),
@@ -697,16 +716,51 @@ def create_paragraphs(layout: PageLayout) -> None:
     # FUTURE ------------------------------------------------------------------------- #
     layout.add(_paragraph_heading("Future work and use cases"))
     layout.add(
-        _paragraph_text(
-            """We can use this to look at how forcing at specific locations affect the
-            global climate. One important region is the western Pacific, where other
-            studies have been using sea surface temperature (SST) patterns to look at
-            warming patterns [3]. With this setup we have good control over exact timing and
-            strength of eruptions, and can design experiments suitable for running the
-            deconvolution algorithm which introduces the non-parametric approach to
-            estimating the temperature response.
-            """
+        pdf.FixedColumnWidthTable(
+            border_radius_top_left=Decimal(8),
+            border_radius_top_right=Decimal(8),
+            border_radius_bottom_right=Decimal(8),
+            border_radius_bottom_left=Decimal(8),
+            number_of_rows=3,
+            number_of_columns=1,
+            background_color=pdf.HexColor(color_palette.MAIN_COLOR),
+            padding_bottom=Decimal(9),
+            padding_top=Decimal(5),
+            padding_right=Decimal(9),
+            padding_left=Decimal(9),
         )
+        .add(
+            _paragraph_text(
+                """We can use this to look at how forcing at specific locations affect
+                the global climate. One important region is the western Pacific, where
+                other studies have been using sea surface temperature (SST) patterns to
+                look at warming patterns [3].
+            """,
+                start_bold=True,
+                no_margins=True,
+            )
+        )
+        .add(
+            _paragraph_text(
+                """With this setup we have good control over exact timing and strength
+                of eruptions, and can design experiments suitable for running the
+                deconvolution algorithm which introduces the non-parametric approach to
+                estimating the temperature response. As such, volcanoes that overlap and
+                cluster together are no problem.
+                """,
+                start_bold=True,
+                no_margins=True,
+            )
+        )
+        .add(
+            _paragraph_text(
+                """Moving forward, ...
+                """,
+                start_bold=True,
+                no_margins=True,
+            )
+        )
+        .no_borders(),
     )
     layout.add(
         _paragraph_image(
