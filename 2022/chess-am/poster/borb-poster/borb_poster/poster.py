@@ -352,10 +352,6 @@ def _paragraph_box(padding_bottom: Decimal = Decimal(9)) -> HeterogeneousParagra
     h = HeterogeneousParagraph(
         [],
         background_color=pdf.HexColor(color_palette.MAIN_COLOR),
-        # border_top=True,
-        # border_right=True,
-        # border_bottom=True,
-        # border_left=True,
         border_radius_top_left=Decimal(8),
         border_radius_top_right=Decimal(8),
         border_radius_bottom_right=Decimal(8),
@@ -637,23 +633,18 @@ def create_paragraphs(layout: PageLayout) -> None:
         # location="bottom",
         # y_shift=-Decimal(100),
     )
-    # scale_down = 3
-    # layout.add(
-    #     _paragraph_image(
-    #         layout,
-    #         "https://github.com/engeir/presentations-files/raw/ce8078c1f469e75ed910118e2cd3a222077b3983/2022/chess-am/assets/AEROD_v-strong_percentiles.png",
-    #         shape=(int(1011 / scale_down), int(624 / scale_down)),
-    #         local=False,
-    #     )
-    # )
-    # layout.add(
-    #     _paragraph_image(
-    #         layout,
-    #         "https://github.com/engeir/presentations-files/raw/ce8078c1f469e75ed910118e2cd3a222077b3983/2022/chess-am/assets/TREFHT-strong_percentiles.png",
-    #         shape=(int(1011 / scale_down), int(624 / scale_down)),
-    #         local=False,
-    #     )
-    # )
+    _paragraph_qr_code(
+        "https://github.com/engeir/presentations-files/raw/14d24ee6343b4b80be8476eb9e2b76bbfadd8dc5/2022/chess-am/assets/AEROD_v20220404.mp4"
+    ).layout(
+        layout.get_page(),
+        Rectangle(
+            layout._previous_element.bounding_box.x
+            + layout._previous_element.bounding_box.width * Decimal(0.7),
+            layout._previous_element.bounding_box.y + Decimal(65),
+            Decimal(64),
+            Decimal(64),
+        ),
+    )
 
     # RESULTS ------------------------------------------------------------------------ #
 
