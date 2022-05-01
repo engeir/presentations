@@ -393,22 +393,25 @@ def _paragraph_text(
         paragraph = _paragraph_box(no_margins=no_margins)
 
     for i, line in enumerate(text.split()):
-        if start_bold:
-            if i < 2:
-                paragraph.add(
-                    ChunkOfText(
-                        line + " ",
-                        font_size=Decimal(13),
-                        font="Helvetica-Bold",
-                        font_color=pdf.HexColor("#dddddd"),
-                    )
+        if start_bold and i < 2:
+            paragraph.add(
+                ChunkOfText(
+                    f"{line} ",
+                    font_size=Decimal(13),
+                    font="Helvetica-Bold",
+                    font_color=pdf.HexColor("#dddddd"),
                 )
-                continue
+            )
+
+            continue
         paragraph.add(
             ChunkOfText(
-                line + " ", font_size=Decimal(13), font_color=pdf.HexColor("#dddddd")
+                f"{line} ",
+                font_size=Decimal(13),
+                font_color=pdf.HexColor("#dddddd"),
             )
         )
+
     return paragraph
 
 
@@ -447,9 +450,13 @@ def _paragraph_text_chunks(
             else:
                 paragraph.add(
                     ChunkOfText(
-                        w + " ", font=font, font_color=back_color, font_size=Decimal(15)
+                        f"{w} ",
+                        font=font,
+                        font_color=back_color,
+                        font_size=Decimal(15),
                     )
                 )
+
     return paragraph
 
 
