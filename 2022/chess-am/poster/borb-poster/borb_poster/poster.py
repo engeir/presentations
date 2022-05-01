@@ -186,7 +186,7 @@ def _footer(
         ),
     )
     pdf.Barcode(
-        data="https://github.com/engeir/presentations-files/raw/2022-chess-am/2022/chess-am/poster.pdf",
+        data="https://github.com/engeir/presentations-files/raw/main/2022/chess-am/poster.pdf",
         width=Decimal(128),
         height=Decimal(128),
         type=pdf.BarcodeType.QR,
