@@ -1,5 +1,6 @@
 """Module for creating a poster with `borb`."""
 
+import math
 import os
 import subprocess
 from decimal import Decimal
@@ -88,23 +89,29 @@ def _footer(
         )
         .add(
             pdf.Paragraph(
+                """Lucy, L. B. (1974), An iterative technique for the rectification of observed distributions."""
+            )
+        )
+        .add(
+            pdf.Paragraph(
+                """Richardson, W. H. (1972), Bayesian-Based Iterative Method of Image Restoration*."""
+            )
+        )
+        .add(
+            pdf.Paragraph(
+                """Stevens, B., Sherwood, S. C., et al. (2016), Prospects for narrowing
+                bounds on Earth's equilibrium climate sensitivity.
+                """
+            )
+        )
+        .add(
+            pdf.Paragraph(
                 """Dong, Y., Proistosescu, C., et al. (2019), Attributing Historical and
                 Future Evolution of Radiative Feedbacks to Regional Warming Patterns
                 using a Green's Function Approach: The Preeminence of the Western
                 Pacific."""
             )
         )
-        .add(
-            pdf.Paragraph(
-                "Nam aliquet ex eget felis lobortis aliquet sit amet ut risus."
-            )
-        )
-        .add(
-            pdf.Paragraph(
-                "Maecenas sit amet odio ut erat tincidunt consectetur accumsan ut nunc."
-            )
-        )
-        .add(pdf.Paragraph("Phasellus eget magna et justo malesuada fringilla."))
     ).add(
         pdf.TableCell(
             pdf.Paragraph(
@@ -179,7 +186,7 @@ def _footer(
         ),
     )
     pdf.Barcode(
-        data="https://github.com/engeir/presentations-files/raw/249364d90e7a42ccc690448bf408cc85d60708f4/2021/fysikermotet/beamer_fysikermotet.pdf",
+        data="https://github.com/engeir/presentations-files/raw/2022-chess-am/2022/chess-am/poster.pdf",
         width=Decimal(128),
         height=Decimal(128),
         type=pdf.BarcodeType.QR,
@@ -207,7 +214,7 @@ def _header(
     width: Decimal,
     height: Decimal,
 ) -> None:
-    scale_img = 0.12
+    scale_img = 0.1
     img_w = Decimal(2724 * scale_img)
     img_h = Decimal(500 * scale_img)
     pdf.Heading(
@@ -219,7 +226,7 @@ def _header(
         horizontal_alignment=Alignment.CENTERED,
     ).layout(page, bounding_box)
     pdf.Heading(
-        "Eirik Rolland Enger*, Audun Theodorsen",
+        "Eirik Rolland Enger*, Audun Theodorsen, Martin Rypdal",
         font="Helvetica-Bold",
         font_color=pdf.HexColor(color_palette.MAIN_COLOR),
         font_size=Decimal(25),
@@ -271,8 +278,8 @@ def _header(
 
 def create_header_footer(page: pdf.Page, header_height: Decimal) -> None:
     """Create a header and a footer."""
-    margin_x = Decimal(20)
-    margin_y = Decimal(20)
+    margin_x = Decimal(15)
+    margin_y = Decimal(15)
     width = PageSize.A2_PORTRAIT.value[0]
     height = PageSize.A2_PORTRAIT.value[1]
     # fmt: off
@@ -458,14 +465,34 @@ def _paragraph_qr_code(link: str) -> pdf.Barcode:
     )
 
 
+def _math_img(url: str, color: str = "#003349") -> str:
+    img_id = 0
+    while os.path.isfile(os.path.join(os.getcwd(), f"image{img_id}.png")):
+        img_id += 1
+    img_name = os.path.join(os.getcwd(), f"image{img_id}.png")
+    subprocess.call(
+        [
+            "convert",
+            url,
+            "-background",
+            color,
+            "-layers",
+            "flatten",
+            img_name,
+        ]
+    )
+    return img_name
+
+
 def _paragraph_image(
     layout: PageLayout,
     path: str,
     shape: tuple[int, int],
     local: bool = False,
     padding_bottom: Decimal = Decimal(0),
+    padding_top: Decimal = Decimal(0),
     caption: Optional[Union[float, str]] = None,
-    scale: float = 1.0,
+    scale: Union[Decimal, float] = 1.0,
 ) -> pdf.Image:
     if local:
         print(
@@ -503,6 +530,7 @@ def _paragraph_image(
         height=Decimal(height),
         horizontal_alignment=align,
         padding_bottom=padding_bottom,
+        padding_top=padding_top,
         # margin_bottom=Decimal(-10),
     )
 
@@ -596,10 +624,12 @@ def create_paragraphs(layout: PageLayout) -> None:
     layout.add(
         _paragraph_text(
             """We are running CESM2.1.3 with the WACCM6 atmosphere model with middle
-            atmosphere chemistry. The evolution of stratospheric aerosols are calculated
-            from SO2 emissions obtained from raw emissions files. The emissions file for
-            default historical run (1850 to 2016) used in CESM2 is show in Figure 1,
-            where each eruption last for six hours per day, starting at noon.
+            atmosphere chemistry. Evolution of stratospheric aerosols are calculated
+            from SO2 emissions obtained from emissions files, show in Figure 1. Figure 2
+            show a simple diagram of how new forcing files are created and run in CESM2.
+            The process of generating working forcing files is carried out fully by the
+            python project volcano-cooking, which can be found on GitHub using the QR
+            code in the heading.
             """
         )
     )
@@ -608,7 +638,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             layout,
             "https://github.com/engeir/presentations-files/raw/dbaf01e59f9061d3ec37f389682d46099af22ccc/2022/chess-am/assets/synthetic_volcanoes_historic_real_data.png",
             (1011, 624),
-            caption=0.26,
+            caption=0.30,
         )
     )
     _caption_previous_object(
@@ -624,7 +654,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             layout,
             "volcano-cooking-flow.png",
             shape=(1792, 2218),
-            caption=0.12,
+            caption=0.13,
             local=True,
         )
     )
@@ -646,8 +676,6 @@ def create_paragraphs(layout: PageLayout) -> None:
         layout,
         location="left",
         width2clm=Decimal(0.35),
-        # location="bottom",
-        # y_shift=-Decimal(100),
     )
     _paragraph_qr_code(
         "https://github.com/engeir/presentations-files/raw/14d24ee6343b4b80be8476eb9e2b76bbfadd8dc5/2022/chess-am/assets/AEROD_v20220404.mp4"
@@ -663,7 +691,6 @@ def create_paragraphs(layout: PageLayout) -> None:
     )
 
     # RESULTS ------------------------------------------------------------------------ #
-
     layout.add(_paragraph_heading("Results"))
     layout.add(
         pdf.FixedColumnWidthTable(
@@ -680,21 +707,24 @@ def create_paragraphs(layout: PageLayout) -> None:
             padding_left=Decimal(9),
         )
         .add(
-            _paragraph_text(
-                """The shape of the temperature response to eruptions of different
-                magnitude is not the same. Temperature peaks later when the climate
-                system is forced with a larger eruption compared to the case of forcing
-                with a smaller eruption.
-                """,
-                start_bold=True,
-                no_margins=True,
+            pdf.TableCell(
+                _paragraph_text(
+                    """The shape of the temperature response to eruptions of different
+                    magnitude is not the same. Temperature peaks later when the climate
+                    system is forced with a larger eruption compared to the case of
+                    forcing with a smaller eruption.
+                    """,
+                    start_bold=True,
+                    no_margins=True,
+                ),
+                padding_bottom=Decimal(10),
             )
         )
         .add(
             _paragraph_text(
-                """In both cases, with smaller and larger eruptions, the temperature has
-                its strongest response after one to two years, and do not reach
-                equilibrium within the first eight years.
+                """In both cases, the temperature has its strongest response after one
+                to two years. Also, even after eight years the temperature has not yet
+                fully recovered back to equilibrium.
                 """,
                 start_bold=True,
                 no_margins=True,
@@ -708,7 +738,7 @@ def create_paragraphs(layout: PageLayout) -> None:
             "https://github.com/engeir/presentations-files/raw/84e2b7adbe528f134c003f956d499b6aa3898b5f/2022/chess-am/assets/compare-waveform-integrate.png",
             shape=(1011, 624),
             caption="bottom",
-            padding_bottom=Decimal(10),
+            padding_bottom=Decimal(40),
         )
     )
     _caption_previous_object(
@@ -722,17 +752,19 @@ def create_paragraphs(layout: PageLayout) -> None:
         """,
         layout,
         location="bottom",
-        y_shift=Decimal(23),
+        y_shift=Decimal(43),
     )
-    # FUTURE ------------------------------------------------------------------------- #
-    layout.add(_paragraph_heading("Future work and use cases"))
+
+    # MATHEMATICAL FRAMEWORK --------------------------------------------------------- #
+    math_scaling = 0.3
+    layout.add(_paragraph_heading("Mathematical framework"))
     layout.add(
         pdf.FixedColumnWidthTable(
             border_radius_top_left=Decimal(8),
             border_radius_top_right=Decimal(8),
             border_radius_bottom_right=Decimal(8),
             border_radius_bottom_left=Decimal(8),
-            number_of_rows=3,
+            number_of_rows=4,
             number_of_columns=1,
             background_color=pdf.HexColor(color_palette.MAIN_COLOR),
             padding_bottom=Decimal(9),
@@ -742,30 +774,92 @@ def create_paragraphs(layout: PageLayout) -> None:
         )
         .add(
             _paragraph_text(
-                """We can use this to look at how forcing at specific locations affect
-                the global climate. One important region is the western Pacific, where
-                other studies have been using sea surface temperature (SST) patterns to
-                look at warming patterns [3].
-            """,
-                start_bold=True,
-                no_margins=True,
-            )
-        )
-        .add(
-            _paragraph_text(
-                """With this setup we have good control over exact timing and strength
-                of eruptions, and can design experiments suitable for running the
-                deconvolution algorithm which introduces the non-parametric approach to
-                estimating the temperature response. As such, volcanoes that overlap and
-                cluster together are no problem.
+                """The filtered Poisson process (FPP) is the phenomenological model used
+                for the temperature response to volcanoes, shown below. It is a
+                convolution equation, where forcing is convolved with a general shape
+                representing a response function.
                 """,
-                start_bold=True,
                 no_margins=True,
             )
         )
         .add(
+            _paragraph_image(
+                layout,
+                _math_img(
+                    # T_K(t) = [\phi*f_K] \left( \frac{t}{\tau_{\mathrm{d}}} \right)
+                    "https://latex2png.com/pngs/3d4b5efbe76266d9711e60698c45f3b4.png"
+                ),
+                (812, 200),
+                scale=math_scaling,
+                local=True,
+                padding_bottom=Decimal(3),
+                padding_top=Decimal(10),
+            )
+        )
+        .add(
             _paragraph_text(
-                """Moving forward, ...
+                """Knowing the forcing and temperature signals, we get to the response
+                by deconvolving, provided we feed the algorithm with an initial guess of
+                the response function [3, 4].
+                """,
+                no_margins=True,
+            )
+        )
+        .add(
+            _paragraph_image(
+                layout,
+                _math_img(
+                    # \phi^{(n+1)}=\phi^{(n)} \frac{(T_K-\langle T_K\rangle)*\hat{f}_K+b}{\phi^{(n)}*f_K*\hat{f}_K+b}
+                    "https://latex2png.com/pngs/30ce7c3df0f5c690f4e09dfe5183d92f.png"
+                ),
+                (1271, 225),
+                scale=Decimal(1271 / 812 * math_scaling),
+                local=True,
+                padding_top=Decimal(10),
+            )
+        )
+        .no_borders()
+    )
+
+    # FUTURE ------------------------------------------------------------------------- #
+    layout.add(_paragraph_heading("Future work and use cases"))
+    layout.add(
+        pdf.FixedColumnWidthTable(
+            border_radius_top_left=Decimal(8),
+            border_radius_top_right=Decimal(8),
+            border_radius_bottom_right=Decimal(8),
+            border_radius_bottom_left=Decimal(8),
+            number_of_rows=2,
+            number_of_columns=1,
+            background_color=pdf.HexColor(color_palette.MAIN_COLOR),
+            padding_bottom=Decimal(9),
+            padding_top=Decimal(5),
+            padding_right=Decimal(9),
+            padding_left=Decimal(9),
+        )
+        .add(
+            pdf.TableCell(
+                _paragraph_text(
+                    """The deconvolution algorithm introduces the non-parametric
+                    approach to estimating the temperature response. This does not need
+                    volcanic eruptions that are isolated in time, although linearity is
+                    assumed. Thus, volcanoes that overlap and cluster together in time
+                    are no problem, allowing us to gain insight into whether they simply
+                    superpose or not.
+                    """,
+                    start_bold=True,
+                    no_margins=True,
+                ),
+                padding_bottom=Decimal(10),
+            )
+        )
+        .add(
+            _paragraph_text(
+                """Studies argue that regional patterns may be important in relation to
+                the outward radiation [5], with some studies looking more closely at the
+                surface temperature patterns [6]. A different take to this may be to
+                rather place volcanic eruptions in some key locations and compare the
+                temperature responses obtained.
                 """,
                 start_bold=True,
                 no_margins=True,
@@ -773,38 +867,38 @@ def create_paragraphs(layout: PageLayout) -> None:
         )
         .no_borders(),
     )
-    layout.add(
-        _paragraph_image(
-            layout,
-            "https://github.com/engeir/presentations-files/raw/f71580dcb981c2e827b7f9bde3978390fe60840f/2022/chess-am/assets/AEROD_v20220404-composite.png",
-            shape=(1191, 754),
-            caption="bottom",
-            scale=0.9,
-        )
-    )
-    _caption_previous_object(
-        """Figure 4: Aerosol optical depth and temperature response obtained from four
-        different simulations using identical volcanic eruptions, shifted in time by
-        three month, placing one eruption in each season of the year. The black lines
-        show the median, while the red shading lie between the 2.5th and 97.5th
-        percentiles.
-        """,
-        layout,
-        location="bottom",
-    )
-    _paragraph_qr_code(
-        "https://github.com/engeir/presentations-files/raw/14d24ee6343b4b80be8476eb9e2b76bbfadd8dc5/2022/chess-am/assets/AEROD_v20220404.mp4"
-    ).layout(
-        layout.get_page(),
-        Rectangle(
-            layout._previous_element.bounding_box.x
-            # + layout._previous_element.bounding_box.width
-            + Decimal(10),
-            layout._previous_element.bounding_box.y + Decimal(65),
-            Decimal(64),
-            Decimal(64),
-        ),
-    )
+    # layout.add(
+    #     _paragraph_image(
+    #         layout,
+    #         "https://github.com/engeir/presentations-files/raw/f71580dcb981c2e827b7f9bde3978390fe60840f/2022/chess-am/assets/AEROD_v20220404-composite.png",
+    #         shape=(1191, 754),
+    #         caption="bottom",
+    #         scale=0.9,
+    #     )
+    # )
+    # _caption_previous_object(
+    #     """Figure 4: Aerosol optical depth and temperature response obtained from four
+    #     different simulations using identical volcanic eruptions, shifted in time by
+    #     three month, placing one eruption in each season of the year. The black lines
+    #     show the median, while the red shading lie between the 2.5th and 97.5th
+    #     percentiles.
+    #     """,
+    #     layout,
+    #     location="bottom",
+    # )
+    # _paragraph_qr_code(
+    #     "https://github.com/engeir/presentations-files/raw/14d24ee6343b4b80be8476eb9e2b76bbfadd8dc5/2022/chess-am/assets/AEROD_v20220404.mp4"
+    # ).layout(
+    #     layout.get_page(),
+    #     Rectangle(
+    #         layout._previous_element.bounding_box.x
+    #         # + layout._previous_element.bounding_box.width
+    #         + Decimal(10),
+    #         layout._previous_element.bounding_box.y + Decimal(65),
+    #         Decimal(64),
+    #         Decimal(64),
+    #     ),
+    # )
 
 
 def custom_layout(
