@@ -218,7 +218,7 @@ def _header(
     img_w = Decimal(2724 * scale_img)
     img_h = Decimal(500 * scale_img)
     pdf.Heading(
-        "Temperature response from volcanoes in the CESM2",
+        "Temperature response to volcanoes in the CESM2",
         font="Helvetica-Bold",
         font_color=pdf.HexColor(color_palette.MAIN_COLOR),
         font_size=Decimal(35),
