@@ -1,0 +1,68 @@
+% !TeX root = ./beamer.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Beamer template with UiT colour scheme
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[xcolor=dvipsnames]{beamer} %
+\usetheme[progressbar=frametitle,
+	titleformat=smallcaps,
+	sectionpage=none,
+	numbering=fraction,
+	block=fill,
+	background=dark]{metropolis}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif} % default family is serif
+\usetikzlibrary{arrows,shapes}
+% If you want notes on the side:
+% \setbeameroption{show notes on second screen=right} % Both
+% \setbeamertemplate{note page}{\pagecolor{yellow!5}\vfill\insertnote\vfill}\usepackage{palatino}
+
+\usepackage{utils/definitions}
+\usepackage{utils/colors}
+\usepackage{utils/divide_toc}
+\usepackage{utils/beamerouterthemesplit}
+\usepackage{utils/citecmd}
+\usepackage{utils/footfix}
+
+\title[ATS745: 1]{ATS745 Presentation 1: atmosphere and ocean in CESM2}
+\author{\textsc{Eirik Rolland Enger}}
+\date{%
+	% \vspace{-3mm}%
+	\today%
+    % September 30, 2022%
+	% \hfill\includegraphics[width=4cm]{utils/UiT_Logo_Eng_2l_Hvit.png}%
+}
+% \logo{\vspace{-2mm}\includegraphics[width=15mm]{utils/UiT_Logo_Eng_2l_Hvit.png}\hspace{1mm}}
+% \institute{UiT --- The Arctic University of Norway}
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture]
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+\begin{frame}%,[allowframebreaks]
+	\frametitle{Overview}
+
+	\setbeamertemplate{section in toc}[sections numbered]
+	\tableofcontents[hideallsubsections]
+
+\end{frame}
+
+\input{./frames/history.tex}
+
+\appendix
+% \input{underscript/appendix.tex}
+\begin{frame}[allowframebreaks]{References}
+
+\printbibliography[heading=none]
+
+\end{frame}
+
+\end{document}

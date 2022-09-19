@@ -1,0 +1,47 @@
+% https://tex.stackexchange.com/a/29931/38244
+\DeclareCiteCommand{\figurecite}
+{\usebibmacro{prenote}}%
+{%
+    \ifciteseen{}{%
+        \usebibmacro{citeindex}%
+        \let\thefootnote\relax%
+        \footnotetext{%
+            \blx@anchor
+            \mkbibbrackets{\usebibmacro{cite}}%
+            \setunit{\addnbspace}
+            \printnames{labelname}%
+            \setunit{\labelnamepunct}
+            \printfield[citetitle]{title}%
+            \newunit%
+            \printfield[]{year}%
+        }%
+        \let\thefootnote\svthefootnote%
+    }%
+    % \autocite{\thefield{entrykey}}%
+}
+{\addsemicolon\space}
+{\usebibmacro{postnote}}
+
+% https://tex.stackexchange.com/a/29931/38244
+\DeclareCiteCommand{\cite}
+{\usebibmacro{prenote}}%
+{%
+    \ifciteseen{}{%
+        \usebibmacro{citeindex}%
+        \let\thefootnote\relax%
+        \footnotetext{%
+            \blx@anchor
+            \mkbibbrackets{\usebibmacro{cite}}%
+            \setunit{\addnbspace}
+            \printnames{labelname}%
+            \setunit{\labelnamepunct}
+            \printfield[citetitle]{title}%
+            \newunit%
+            \printfield[]{year}%
+        }%
+        \let\thefootnote\svthefootnote%
+    }%
+    \autocite{\thefield{entrykey}}%
+}
+{\addsemicolon\space}
+{\usebibmacro{postnote}}

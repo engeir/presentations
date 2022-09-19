@@ -1,0 +1,41 @@
+\usepackage{times}
+\usepackage{tikz}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{subcaption}
+\usepackage{media9}
+% \usepackage{movie15} % superceded by media9
+\usepackage{animate}
+\usepackage{multimedia}
+\usepackage{wrapfig}
+\usepackage[utf8]{inputenc}\DeclareUnicodeCharacter{2212}{-}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{/home/een023/science/ref/ref.bib}
+% \usepackage{natbib}
+\usepackage{multicol}
+\usepackage{pgf,pgfpages}
+\usepackage{graphicx}
+\usepackage[version=4]{mhchem}
+\usepackage{copyrightbox}
+% Make it have the same font and keep color
+\makeatletter
+\renewcommand{\CRB@setcopyrightfont}{%
+\color{black!33}
+\usefonttheme{serif}\selectfont
+}
+\makeatother
+\newcommand{\inputpgf}[2][1]{
+  \resizebox{#1\linewidth}{!}{%
+  \input{#2}
+  }%
+}
+\usepackage{appendixnumberbeamer}
+\DeclareMathOperator{\sech}{sech}
+
+\usepackage{verbatim}
+\usepackage{booktabs}
+% To make a text box
+\usepackage[absolute,overlay]{textpos}
+
+\newcommand{\dt}[1][t]{\mathrm{d}#1}
+\newcommand{\gf}[1]{\boldsymbol{#1}}
