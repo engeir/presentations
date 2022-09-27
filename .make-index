@@ -1,0 +1,18 @@
+#!/bin/sh
+
+#
+# This script depends on sed and frangipanni
+#
+
+# First, we remove everything below line 5 and add a spacing:
+sed -i 5q "./README.md"
+echo "" >>"./README.md"
+
+INDEX=$(find . -name "README.md" ! -wholename "./README.md" | frangipanni -indent 2)
+echo "$INDEX" >>"./README.md"
+
+# Now that we have the tree, lets make it into a list of links:
+LIST=$(sed -n '7,$p' README.md | sed -r 's/(^\s*)(.*)/echo -n "\1- [\2](";find . -wholename "*\2" -printf "%p";echo -n ")"/e')
+sed -i 5q "./README.md"
+echo "" >>"./README.md"
+echo "$LIST" >>"./README.md"
