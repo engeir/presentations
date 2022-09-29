@@ -1,17 +1,13 @@
 # Talk in Boulder CO
 
-Talk should largely focus on WACCM and how and why I use it.
+This talk was presented at the Friday tea meeting at NCAR HAO.
 
-## Ideas
-
-- What is the main goal/aim of the project
-- Describe the model setup I use
-- Explain steps I take when running the model, possibly a quick look at
-  `volcano-cooking`
-- Present results I showed on CHESS AM 22
-- Present results from double-overlap simulation
-- Discuss seasonal variability and ask for tips
-- Possibly some future ideas/suggestions
+Find the source code for the presentation at
+`engeir/slides/content/2022-09-30-boulder-visit.md`
+([permalink](https://github.com/engeir/slides/blob/82d90992ade9cc64a4a9fe07eed2e428812f06e3/content/2022-09-30-boulder-visit.md),
+[dynamic link](https://github.com/engeir/slides/blob/main/content/2022-09-30-boulder-visit.md)),
+and the finished slides at
+[slides.eirikenger.xyz](https://slides.eirikenger.xyz/2022-09-30-boulder-visit.html).
 
 ## Abstract
 
