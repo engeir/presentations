@@ -5,7 +5,9 @@
 Public presentations:
 
 - [2022](./2022)
-  - [ats745/1/README.md](./2022/ats745/1/README.md)
+  - [ats745](./2022/ats745)
+    - [1/README.md](./2022/ats745/1/README.md)
+    - [2/README.md](./2022/ats745/2/README.md)
   - [boulder/README.md](./2022/boulder/README.md)
   - [uit-climate-meeting/README.md](./2022/uit-climate-meeting/README.md)
   - [chess-am22/README.md](./2022/chess-am22/README.md)
