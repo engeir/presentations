@@ -1,5 +1,9 @@
 # ATS745 Presentation 2
 
+Suggestions:
+
+- Focus on MAM?
+
 This presentation was part of the course ATS745.
 
 Find the source code for the presentation at
