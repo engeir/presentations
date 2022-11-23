@@ -60,3 +60,11 @@ Marsh et al. 2013
 - Both models overestimate the short-term cooling following large volcanic eruptions
 - CCSM4 predicts too low stratospheric polar temperatures
 - We find that the Arctic sea ice extent is more realistic in WACCM
+
+Gettleman et al. 2019
+
+- WACCM was developed (Garcia et al. 2007) and coupled to ocean (Marsh et al. 2013)
+- WACCM also explained in Marsh et al. 2007, especially the mesosphere and the lower
+  thermosphere chemistry
+- MA is closer to WACCM4 than the TSMLT in WACCM6 or MAD
+- MAD is described in Verronen et al. 2016
