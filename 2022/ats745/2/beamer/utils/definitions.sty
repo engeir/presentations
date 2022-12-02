@@ -2,14 +2,20 @@
 \usepackage{tikz}
 
 \usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{siunitx}
 \usepackage{subcaption}
 \usepackage{media9}
 \usepackage{animate}
 % \usepackage{multimedia}
 \usepackage{wrapfig}
 \usepackage[utf8]{inputenc}\DeclareUnicodeCharacter{2212}{-}
-\usepackage[backend=biber,natbib=true,style=numeric]{biblatex}
+\usepackage[
+	backend=biber,
+	natbib=true,
+	% style=numeric
+]{biblatex}
 \AtBeginBibliography{\footnotesize}
+\setbeamertemplate{bibliography item}[article]
 \addbibresource{/home/een023/science/ref/ref.bib}
 \usepackage{multicol}
 \usepackage{pgf,pgfpages}
