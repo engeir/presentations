@@ -6,15 +6,16 @@
 \usepackage{subcaption}
 \usepackage{media9}
 \usepackage{animate}
-% \usepackage{multimedia}
 \usepackage{wrapfig}
+\usepackage{multirow}
 \usepackage[utf8]{inputenc}\DeclareUnicodeCharacter{2212}{-}
 \usepackage[
 	backend=biber,
 	natbib=true,
 	% style=numeric
 ]{biblatex}
-\AtBeginBibliography{\footnotesize}
+\AtBeginBibliography{\scriptsize}
+\renewcommand{\pgfuseimage}[1]{\includegraphics[scale=.75]{#1}}
 \setbeamertemplate{bibliography item}[article]
 \addbibresource{/home/een023/science/ref/ref.bib}
 \usepackage{multicol}
@@ -22,7 +23,7 @@
 \usepackage{graphicx}
 \usepackage[version=4]{mhchem}
 \usepackage{copyrightbox}
-% Make it have the same font and keep color
+% Make it have the same font and keep colour
 \makeatletter
 \renewcommand{\CRB@setcopyrightfont}{%
 	\color{black!33}
