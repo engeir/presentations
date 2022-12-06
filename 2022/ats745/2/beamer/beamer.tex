@@ -49,12 +49,6 @@
 % displaystyle so that we don't get small fractions.
 \everymath{\displaystyle}
 
-% \begin{frame}%,[allowframebreaks]
-% 	\frametitle{Overview}
-% 	\setbeamertemplate{section in toc}[sections numbered]
-% 	\tableofcontents[hideallsubsections]
-% \end{frame}
-
 \section{Motivation}
 
 \subsection{SSW}
@@ -120,8 +114,6 @@
 	\begin{itemize}
 		\item WACCM6 is able to reproduce the evolution of the ozone layer (also SH
 		      polar ozone hole)
-		      % \item Lower stratospheric ozone field is dynamically controlled, and vertical
-		      %       velocity will impact the total column ozone
 		\item Ozone variability in the tropical stratosphere improves on the inclusion
 		      of an internally generated quasi-bilennial oscillation (QBO)  % marsh2013
 	\end{itemize}
@@ -141,12 +133,15 @@
 			      QBO. So again, stratospheric winds (but now in the tropical
 			      stratosphere) are needed to more precisely simulate a different
 			      physical process, ozone variability.
-			\item Not shown are the tropics, where there are larger biases. This is due
-			      to tropical upwelling; since the lower stratospheric ozone field is
-			      dynamically controlled, vertical velocity impact the total column
-			      ozone. And, larger vertical velocities in the lower stratosphere are
-			      expected to be associated with reduced ozone due to vertical advection
-			      of ozone poor air from the troposphere.
+			\item Not shown are the tropics, where there are larger biases.
+			\item \textit{
+				      (This is due to tropical upwelling; since the lower stratospheric
+				      ozone field is dynamically controlled, vertical velocity impact
+				      the total column ozone. And, larger vertical velocities in the
+				      lower stratosphere are expected to be associated with reduced
+				      ozone due to vertical advection of ozone poor air from the
+				      troposphere.)
+			      }
 		\end{itemize}
 	}
 \end{frame}
@@ -183,6 +178,7 @@
 		\end{center}
 		\label{fig:blocking-frequency}
 	\end{figure*}
+    \figurecite{gettleman2019}
 	\note{
 		\begin{itemize}
 			\item All simulations coupled to an active ocean. CESM1 has 35 simulations,
@@ -245,15 +241,13 @@
 		\scriptsize
 		\begin{center}
 			\begin{tabular}[c]{cccc}
-				Configuration & Resolution                    & Chemistry & Core-hours/simulation years \\
+				Configuration & Resolution                   & Chemistry & Core-hours/simulation years \\
 				\hline
-				CAM6          & $\SI{1}{\degree} $, $ 32 $ L  & CAM       & $ \num{3700} $              \\
-				WACCM6        & $\SI{2}{\degree} $, $ 70 $ L  & MA        & $ \num{5400} $              \\
-				WACCM6        & $\SI{1}{\degree} $, $ 70 $ L  & TSMLT     & $ \num{22000} $             \\
-				WACCM6-SC     & $\SI{1}{\degree} $, $ 70 $ L  & SC        & $ \num{6000} $              \\
-				WACCM6-SD     & $\SI{1}{\degree} $, $ 88 $ L  & TSMLT     & $ \num{23000} $             \\
-				WACCM5.4      & $\SI{1}{\degree} $, $ 110 $ L & MA        & $ \num{20000} $             \\
-				WACCM5.4-SC   & $\SI{1}{\degree} $, $ 110 $ L & SC        & $ \num{9000} $              \\
+				CAM6          & $\SI{1}{\degree} $, $ 32 $ L & CAM       & $ \num{3700} $              \\
+				WACCM6        & $\SI{2}{\degree} $, $ 70 $ L & MA        & $ \num{5400} $              \\
+				WACCM6        & $\SI{1}{\degree} $, $ 70 $ L & TSMLT     & $ \num{22000} $             \\
+				WACCM6-SC     & $\SI{1}{\degree} $, $ 70 $ L & SC        & $ \num{6000} $              \\
+				WACCM6-SD     & $\SI{1}{\degree} $, $ 88 $ L & TSMLT     & $ \num{23000} $             \\
 			\end{tabular}
 		\end{center}
 	\end{table}
@@ -274,24 +268,7 @@
 	}
 \end{frame}
 
-% \begin{frame}{Similarities}
-% 	\begin{itemize}
-% 		\item Top of atmosphere energy budget
-% 		\item Cloud radiative effects
-% 		\item Tropospheric physical processes are the same in CAM6 and WACCM6
-% 	\end{itemize}
-% \end{frame}
-
 \subsection{Spatial}
-% \begin{frame}{Spatial}
-% 	\begin{itemize}
-% 		% \item From Marsh 2013, 18 pressure levels between surface and 100hPa are identical between WACCM4 and CCSM4. Higher resolution between 100 hPa and CCSM4's top (8 vs. 17)
-% 		\item Top goes from $ \SI{40}{\kilo\metre} $ to $ \SI{140}{\kilo\metre} $
-% 		\item Vertical resolution is somewhat similar in the troposphere
-% 		\item Horizontal resolution is the same
-% 	\end{itemize}
-% \end{frame}
-
 \begin{frame}{Spatial}
 	\begin{center}
 		\copyrightbox[r]{
@@ -391,23 +368,6 @@
 	}
 \end{frame}
 
-\begin{frame}{Stratospheric Aerosols}
-	In CAM, stratospheric aerosols are prescribed based on output from previous WACCM
-	simulations
-	\begin{figure}
-		\begin{center}
-			\includegraphics[width=0.95\textwidth]{./assets/frame_00009-2.png}
-		\end{center}
-		\caption*{\scriptsize Aerosol optical depth from stratospheric volcanic eruption in WACCM}
-		\label{fig:so2-distribution}
-	\end{figure}
-    \note{
-        \begin{itemize}
-            \item Example of \ce{SO2} evolution after an eruption (aerosol optical depth).
-        \end{itemize}
-    }
-\end{frame}
-
 \begin{frame}{Stratospheric Aerosol Optical Depth}
 	\begin{figure}
 		\begin{center}
@@ -416,14 +376,14 @@
 		\caption*{\scriptsize Stratospheric aerosol optical depth at different locations agree well}
 		\label{fig:saod}
 	\end{figure}
-    \vspace{-9mm}
+	\vspace{-9mm}
 	\figurecite{gettleman2019}
-    \note{
-        \begin{itemize}
-            \item Second example of aerosol optical depth, this time of how well is
-                  agrees with observations at different latitudes.
-        \end{itemize}
-    }
+	\note{
+		\begin{itemize}
+			\item Second example of aerosol optical depth, this time of how well is
+			      agrees with observations at different latitudes.
+		\end{itemize}
+	}
 \end{frame}
 
 \begin{frame}{Lumping}
@@ -469,23 +429,23 @@
 		      consisting of \ce{O+}, \ce{O2+}, \ce{N+}, \ce{N2+}, \ce{NO+}
 	\end{itemize}
 	\note{
-        \begin{itemize}
-            \item Photoionization and heating rates at wavelengths shorter than
-                  Lyman-$\alpha$, WACCM6 uses the parametrization of Solomon and Qian.
-                  This uses the $ F_{10.7} $ index as input.
-            \item Ion-pair production rates by galactic cosmic rays, solar protons, and
-                  medium-energy electrons are prescribed
-            \item For lower-energy electrons that precipitate in the auroral regions,
-                  WACCM6 use the parametrized auroral oval model by Roble and Ridley
-                  (1994) (implementation described in Marsh et al. (2007)). This model
-                  takes as input the power input to the atmopshere from energetic
-                  particle bombardment integrated over either the Northern or Southern
-                  Hemisphere, known as the Hemispheric Power in gigawatts.
-            \item $ HP $ is assumed to be related to the $ \mathrm{K_P} $ index only,
-                  show here, formulation by Zhang and Paxton. If one wish to simulate
-                  for example solar storms, higher frequency forcing files can also be
-                  used.
-        \end{itemize}
+		\begin{itemize}
+			\item Photoionization and heating rates at wavelengths shorter than
+			      Lyman-$\alpha$, WACCM6 uses the parametrization of Solomon and Qian.
+			      This uses the $ F_{10.7} $ index as input.
+			\item Ion-pair production rates by galactic cosmic rays, solar protons, and
+			      medium-energy electrons are prescribed
+			\item For lower-energy electrons that precipitate in the auroral regions,
+			      WACCM6 use the parametrized auroral oval model by Roble and Ridley
+			      (1994) (implementation described in Marsh et al. (2007)). This model
+			      takes as input the power input to the atmopshere from energetic
+			      particle bombardment integrated over either the Northern or Southern
+			      Hemisphere, known as the Hemispheric Power in gigawatts.
+			\item $ HP $ is assumed to be related to the $ \mathrm{K_P} $ index only,
+			      show here, formulation by Zhang and Paxton. If one wish to simulate
+			      for example solar storms, higher frequency forcing files can also be
+			      used.
+		\end{itemize}
 	}
 \end{frame}
 
