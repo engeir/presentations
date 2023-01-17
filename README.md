@@ -11,6 +11,7 @@ Public presentations:
   - [boulder/README.md](./2022/boulder/README.md)
   - [uit-climate-meeting/README.md](./2022/uit-climate-meeting/README.md)
   - [chess-am22/README.md](./2022/chess-am22/README.md)
+- [2023/midterm-evaluation/README.md](./2023/midterm-evaluation/README.md)
 - [2021](./2021)
   - [chess-am21/README.md](./2021/chess-am21/README.md)
   - [research-tuesday/README.md](./2021/research-tuesday/README.md)
