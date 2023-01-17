@@ -30,3 +30,6 @@ printf "@pic/conv.png\n\n" >>sent.sent
 
 pnglatex -S -b Transparent -F White -d 2000 -f "\phi^{(n+1)}=\phi^{(n)}\frac{(T_K-\langle T_K\rangle)*\hat{f}_K+b}{\phi^{(n)}*f_K*\hat{f}_K+b}" -o pic/deconv.png
 printf "@pic/deconv.png\n\n" >>sent.sent
+
+# Finally, why not have a look at the result!
+# sent ./sent.sent
