@@ -8,7 +8,7 @@
 sed -i 5q "./README.md"
 echo "" >>"./README.md"
 
-INDEX=$(find . -name "README.md" ! -wholename "./README.md" | frangipanni -indent 2)
+INDEX=$(find . -name "README.md" ! -wholename "./README.md" | sort -r | frangipanni -indent 2)
 echo "$INDEX" >>"./README.md"
 
 # Now that we have the tree, lets make it into a list of links:
