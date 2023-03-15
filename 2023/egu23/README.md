@@ -1,6 +1,6 @@
 # European Geosciences Union General Assembly 2023
 
-_View abstract on the EGU website:
+_View the abstract on the EGU website:
 [EGU23-3331](https://meetingorganizer.copernicus.org/EGU23/EGU23-3331.html)._
 
 We investigate how the global mean temperature responds to single volcanic events of
@@ -41,3 +41,8 @@ used by [1].
 - [3]: Salvi, P., Ceppi, P., et al., 'Interpreting Differences in Radiative Feedbacks
   From Aerosols Versus Greenhouse Gases', Geophysical Research Letters, 2022, vol. 49,
   no. 8, p. e2022GL097766.
+
+> Cite as: Enger, E., Theodorsen, A., Rugenstein, M., and Graversen, R.: Insensitivity
+> of global temperature response to the magnitude of volcanic eruptions, EGU General
+> Assembly 2023, Vienna, Austria, 24–28 Apr 2023, EGU23-3331,
+> https://doi.org/10.5194/egusphere-egu23-3331, 2023.
