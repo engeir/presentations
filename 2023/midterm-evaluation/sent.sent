@@ -1,0 +1,56 @@
+Global Temperature Response to Volcanic Activity
+
+Motivation and background
+
+@pic/gen/lin_model.png
+
+Filtered Poisson Process
+
+@pic/gen/sum.png
+
+@pic/gen/conv.png
+
+Deconvolution algorithm
+
+@pic/gen/deconv.png
+
+Model setup
+  1. Synthetic eruptions are given to CESM2
+  2. Run using the BWma1850 compset
+
+Results
+
+Single-volcano events
+
+Double-volcano events
+
+Do non-linear effects become important as an eruption
+occur when the temperature is in a perturbed state?
+
+CESM1 Last Millennium Ensemble
+
+@./pic/cesm_lme_deconvolution_delta_old-daily-3000it_zoomed-frc.png
+
+@./pic/cesm_lme_deconvolution_delta_new2_zoomed-temp.png
+
+@./pic/cesm_lme_deconvolution_delta_new2_zoomed.png
+
+Deconvolution Issues
+
+@./pic/f_orig.png
+
+@./pic/f_forward.png
+
+Going Forward
+
+Paper 1
+Linear response to volcanic forcing
+in different climate states in CESM2
+
+Paper 2
+Pulse estimation from simulation data
+with a deconvolution method
+
+Paper 3
+Assessment of non-linear responses
+in the LongRunMIP ensemble
