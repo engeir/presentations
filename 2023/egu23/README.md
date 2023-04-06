@@ -1,7 +1,17 @@
 # European Geosciences Union General Assembly 2023
 
-_View the abstract on the EGU website:
-[EGU23-3331](https://meetingorganizer.copernicus.org/EGU23/EGU23-3331.html)._
+## Links
+
+Visit the EGU [oral presentation
+guidelines](https://egu23.eu/guidelines/presenters/oral.html).
+
+Note on the supplementary material: if a CC BY license is opted for, the supplementary
+material is released to the open one month after the conference ends.
+
+## Abstract
+
+> _View the abstract on the EGU website:
+> [EGU23-3331](https://meetingorganizer.copernicus.org/EGU23/EGU23-3331.html)._
 
 We investigate how the global mean temperature responds to single volcanic events of
 different magnitudes and to multiple events occurring close in time. We are using the
