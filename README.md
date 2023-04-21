@@ -4,7 +4,9 @@
 
 Public presentations:
 
-- [2023/midterm-evaluation/README.md](./2023/midterm-evaluation/README.md)
+- [2023](./2023)
+  - [midterm-evaluation/README.md](./2023/midterm-evaluation/README.md)
+  - [egu23/README.md](./2023/egu23/README.md)
 - [2022](./2022)
   - [uit-climate-meeting/README.md](./2022/uit-climate-meeting/README.md)
   - [chess-am22/README.md](./2022/chess-am22/README.md)
