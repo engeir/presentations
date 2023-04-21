@@ -1,12 +1,18 @@
 # European Geosciences Union General Assembly 2023
 
-## Links
+This talk was presented at the EGU General Assembly 2023, in the session _Understanding
+volcano-climate impacts and the stratospheric aerosol layer_.
 
-Visit the EGU [oral presentation
-guidelines](https://egu23.eu/guidelines/presenters/oral.html).
+Find the source code for the presentation at
+`engeir/slides/content/2023-04-24-egu-conference.md`
+([permalink](https://github.com/engeir/slides/blob/1fe1fb8f99a8c7d64330d23f1f021489740990a2/content/2023-04-24-egu-conference.md),
+[dynamic link](https://github.com/engeir/slides/blob/main/content/2023-04-24-egu-conference.md)),
+and the finished slides at
+[slides.eirikenger.xyz](https://slides.eirikenger.xyz/2023-04-24-egu-conference.html).
 
-Note on the supplementary material: if a CC BY license is opted for, the supplementary
-material is released to the open one month after the conference ends.
+The supplementary can be found at `engeir/slides/content/2023-04-24-egu-conference.md`
+([source](https://github.com/engeir/slides/blob/main/content/2023-04-24-egu-conference-supplementary.md),
+[slides](https://slides.eirikenger.xyz/2023-04-24-egu-conference-supplementary)).
 
 ## Abstract
 
