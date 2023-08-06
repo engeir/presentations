@@ -6,6 +6,7 @@ Public presentations:
 
 - [2023](./2023)
   - [midterm-evaluation/README.md](./2023/midterm-evaluation/README.md)
+  - [fysikermotet23/README.md](./2023/fysikermotet23/README.md)
   - [egu23/README.md](./2023/egu23/README.md)
 - [2022](./2022)
   - [uit-climate-meeting/README.md](./2022/uit-climate-meeting/README.md)
