@@ -5,6 +5,7 @@
 Public presentations:
 
 - [2023](./2023)
+  - [skibotn/README.md](./2023/skibotn/README.md)
   - [midterm-evaluation/README.md](./2023/midterm-evaluation/README.md)
   - [fysikermotet23/README.md](./2023/fysikermotet23/README.md)
   - [egu23/README.md](./2023/egu23/README.md)
