@@ -4,6 +4,7 @@
 
 Public presentations:
 
+- [2024/skibotn/README.md](./2024/skibotn/README.md)
 - [2023](./2023)
   - [skibotn/README.md](./2023/skibotn/README.md)
   - [midterm-evaluation/README.md](./2023/midterm-evaluation/README.md)
